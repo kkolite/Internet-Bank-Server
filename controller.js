@@ -8,7 +8,6 @@ const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {secret} = require('./config');
-const { ObjectID } = require('bson');
 
 class Controller {
     async newUser(req, res) {
@@ -165,6 +164,47 @@ class Controller {
             .status(200)
             .json({
                 message: `User ${payload.id} deleted`,
+                success: true,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async updateUser(req, res) {
+        try {
+            const header = req.headers.authorization;
+            const { username, email, password } = req.body;
+            if (!header) {
+                return res.status(403).json({
+                    message: 'Error! No token. Need to login',
+                    success: false,
+                })
+            }
+
+            if (!username | !email | !password) {
+                return res.status(403).json({
+                    message: 'Error! Incorrect req body',
+                    success: false,
+                })
+            }
+
+            const token = req.headers.authorization.split(' ')[1];
+            const payload = jwt.verify(token, secret);
+            const user = await User.updateOne({_id: payload.id}, {
+                username,
+                email,
+                password,
+            });
+
+            return res
+            .status(200)
+            .json({
+                message: 'Success!',
                 success: true,
             });
         } catch (error) {
