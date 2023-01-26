@@ -51,3 +51,43 @@
                 
 
 ### User
+
+#### GET
+- Method: GET
+- URL: /
+
+- req header: `Authorization: Bearer ${token}`
+
+- res body:
+    - `message: Success!`,
+    - `success: true`,
+    - `userConfig`:
+        - `username: string`,
+        - `money: number`,
+        - `isAdmin: boolean`,
+        - `isBlock: boolean`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error!`
+
+#### PUT
+- Method: GET
+- URL: /
+
+In progess
+
+#### DELETE
+- Method: GET
+- URL: /
+
+- req header: `Authorization: Bearer ${token}`
+- req body: `password: string`
+
+- res body: 
+    - `success: true`
+    - `message: User ${payload.id} deleted`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token or/and password. Need to login` or `Error!`
