@@ -8,60 +8,46 @@
 - Method: POST
 - URL: /registration
 
-- req body: ~~~{
-   username: string,
-   email: string,
-   password: string
-}~~~
+- req body:
+   `username: string`,
+   `email: string`
+   `password: string`
 
-- error bodies: ~~~{
-                    message: 'Ooops! Empty field!',
-                    success: false,
-                }
 
-                {
-                    message: 'We already have user with same username/email',
-                    success: false,
-                }
+- error bodies:
+   `success: false`
+   `message`: `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
 
-                {
-                    message: 'Error!',
-                    success: false,
-                }~~~
+- success body:
+  `success: true`
+  `message: New user create!`
+               
 
 ### Login
 - Method: POST
 - URL: /login
 
-- req body: ~~~{
-   username: string,
-   password: string
-}~~~
-- res body: ~~~{
-                message: 'Success!',
-                success: true,
-                token,
-                userConfig: {
-                    username: user.username,
-                    money: user.money,
-                    isAdmin: user.isAdmin,
-                    isBlock: user.isBlock
-                }
-            }~~~
-            **Important!** Токен должен быть сохранен в сессионное хранилище. При дальнейших операциях с сервером по нему осуществляется проверка пользователя.
+- req body:
+   `username: string`,
+   `password: string`
 
-- error bodies: ~~~{
-                    message: ${username} not found,
-                    success: false,
-                }
-                {
-                    message: 'Invalid password',
-                    success: false,
-                }
-                {
-                    message: 'Error!',
-                    success: false,
-                }~~~
+- res body: 
+    `message: Success!`,
+    `success: true`,
+    `token`,
+    `userConfig`
+    
+**Important!** Токен должен быть сохранен в сессионное хранилище. При дальнейших операциях с сервером по нему осуществляется проверка пользователя.
+
+- user config:
+    `username: string`,
+    `money: number`,
+    `isAdmin: boolean`,
+    `isBlock: boolean`
+
+- error bodies:
+    `success: false`,
+    `message`:`${username} not found` or `Invalid password` or `Error!`
                 
 
 ### User
