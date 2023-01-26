@@ -8,11 +8,21 @@ const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {secret} = require('./config');
+const { ObjectID } = require('bson');
 
 class Controller {
     async newUser(req, res) {
         try {
             const { username, email, password } = req.body;
+
+            if(!username || !email || !password) {
+                return res
+                .status(400)
+                .json({
+                    message: 'Ooops! Empty field!',
+                    success: false,
+                })
+            }
 
             const isNotUniq = await User.findOne({username});
             if(isNotUniq) {
@@ -48,6 +58,7 @@ class Controller {
             });
         }
     }
+
     async login(req, res) {
         try {
             const {username, password} = req.body;
@@ -94,19 +105,20 @@ class Controller {
             })
         }
     }
+
     async getInfo(req, res) {
         try {
             const header = req.headers.authorization;
             if (!header) {
-                res.status(403).json({
+                return res.status(403).json({
                     message: 'Error! No token. Need to login',
                     success: false,
                 })
             }
 
-            const token = reg.headers.authorization.split(' ')[1];
+            const token = req.headers.authorization.split(' ')[1];
             const payload = jwt.verify(token, secret);
-            const user = User.findOne({_id: payload.id});
+            const user = await User.findOne({_id: payload.id});
 
             return res
             .status(200)
@@ -119,6 +131,41 @@ class Controller {
                     isAdmin: user.isAdmin,
                     isBlock: user.isBlock
                 }
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async deleteUser(req, res) {
+        try {
+            const header = req.headers.authorization;
+            const { password } = req.body;
+            if (!header || !password) {
+                return res.status(403).json({
+                    message: 'Error! No token or/and password. Need to login',
+                    success: false,
+                })
+            }
+
+            const token = req.headers.authorization.split(' ')[1];
+            const payload = jwt.verify(token, secret);
+            const user = await User.findOne({_id: payload.id});
+            const isPasswordValid = bcrypt.compareSync(password, user.password)
+            if(isPasswordValid) {
+                await User.deleteOne({_id: payload.id});
+                console.log(`User ${payload.id} deleted`)
+            }
+
+            return res
+            .status(200)
+            .json({
+                message: `User ${payload.id} deleted`,
+                success: true,
             });
         } catch (error) {
             console.log(error);

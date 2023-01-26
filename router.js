@@ -6,6 +6,6 @@ router.post('/registration', Controller.newUser);
 router.post('/login', Controller.login);
 router.get('/', Controller.getInfo);
 router.put('/', /* func */);
-router.delete('/', /* func */);
+router.delete('/', Controller.deleteUser);
 
 module.exports = router;
