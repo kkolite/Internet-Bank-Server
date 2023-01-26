@@ -9,18 +9,18 @@
 - URL: /registration
 
 - req body:
-   `username: string`,
-   `email: string`
-   `password: string`
+    - `username: string`,
+    - `email: string`
+    - `password: string`
 
 
 - error bodies:
-   `success: false`
-   `message`: `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
+    - `success: false`
+    - `message`: `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
 
 - success body:
-  `success: true`
-  `message: New user create!`
+    - `success: true`
+    - `message: New user create!`
                
 
 ### Login
@@ -28,26 +28,26 @@
 - URL: /login
 
 - req body:
-   `username: string`,
-   `password: string`
+    - `username: string`,
+    - `password: string`
 
 - res body: 
-    `message: Success!`,
-    `success: true`,
-    `token`,
-    `userConfig`
+    - `message: Success!`,
+    - `success: true`,
+    - `token`,
+    - `userConfig`
     
 **Important!** Токен должен быть сохранен в сессионное хранилище. При дальнейших операциях с сервером по нему осуществляется проверка пользователя.
 
 - user config:
-    `username: string`,
-    `money: number`,
-    `isAdmin: boolean`,
-    `isBlock: boolean`
+    - `username: string`,
+    - `money: number`,
+    - `isAdmin: boolean`,
+    - `isBlock: boolean`
 
 - error bodies:
-    `success: false`,
-    `message`:`${username} not found` or `Invalid password` or `Error!`
+    - `success: false`,
+    - `message`:`${username} not found` or `Invalid password` or `Error!`
                 
 
 ### User
