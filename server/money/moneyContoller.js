@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const {secret} = require('../config');
+const commission = require('./commission');
+const config = require('../config');
 
 class moneyController {
     async change(req, res) {
@@ -30,7 +32,7 @@ class moneyController {
             let newMoney = 0;
 
             if(operation === 'add') {
-                newMoney = user.money + money
+                newMoney = user.money + money;
             }
             if(operation === 'remove') {
                 if(money > user.money) {
@@ -108,6 +110,34 @@ class moneyController {
             .json({
                 success: true,
                 message: 'Success!'
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async commissionToBank(req, res) {
+        try {
+            const {money, operationID} = req.body;
+            if(!money) {
+                return res.status(400).json({
+                    message: 'Error! Invalid body',
+                    success: false,
+                })
+            }
+            await commission(money, config.commission);
+            const moneyPay = money * ((100 - 2)/100);
+            return res
+            .status(200)
+            .json({
+                success: true,
+                message: 'Success',
+                moneyPay,
+                commission: config.commission
             })
         } catch (error) {
             console.log(error);

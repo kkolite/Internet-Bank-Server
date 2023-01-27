@@ -9,7 +9,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRouter = require('./server/user/userRouter');
-const moneyRouter = require('./server/money/moneyRouter')
+const moneyRouter = require('./server/money/moneyRouter');
 
 const port = process.env.PORT || 3000;
 const MONGO_URL = `mongodb://qwerty:9Ij62MhBMOLIoZQ5@ac-ek4wj69-shard-00-00.jmt0gmm.mongodb.net:27017,ac-ek4wj69-shard-00-01.jmt0gmm.mongodb.net:27017,ac-ek4wj69-shard-00-02.jmt0gmm.mongodb.net:27017/?ssl=true&replicaSet=atlas-12rcvp-shard-0&authSource=admin&retryWrites=true&w=majority`

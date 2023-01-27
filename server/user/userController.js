@@ -193,12 +193,13 @@ class userController {
                 })
             }
 
+            const cryptoPassword = bcrypt.hashSync(password, 6);
             const token = req.headers.authorization.split(' ')[1];
             const payload = jwt.verify(token, secret);
             await User.updateOne({_id: payload.id}, {
                 username,
                 email,
-                password,
+                password: cryptoPassword,
             });
 
             return res
