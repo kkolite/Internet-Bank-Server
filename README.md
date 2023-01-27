@@ -2,7 +2,11 @@
 
 Данный сервер написан для работы курсового проекта [Интернет-Банк](https://github.com/kkolite/Internet-Bank)
 
-## Сценарий пользователя 
+[Сценарий Пользователя](#сценарий-пользователя)
+[Сценарий Денег](#сценарий-денег)
+[Сценарий Админа](#сценарий-админа)
+
+## Сценарий Пользователя 
 
 ### Registration
 
@@ -117,7 +121,7 @@ In progess
     - `success: false`
     - `message`: `Error! No token or/and password. Need to login` or `Error!`
 
-### Money
+## Сценарий Денег
 
 #### Add or remove money
 
@@ -189,7 +193,7 @@ In progess
     - `success: false`
     - `message`: `Error! Invalid body` or `Error!`
 
-### Admin
+## Сценарий Админа
 
 Админ обладает полным доступом к данным всех клиентов. Он может:
 - Блокировать счет
