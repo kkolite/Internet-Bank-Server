@@ -280,6 +280,63 @@ In progess
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in header` or `Not found user '${username}' in base` or `Error!`
 
+#### Create new user
+
+Создает нового юзера.
+
+- Method: POST
+- URL: admin/user
+
+- req body:
+    - `username: string`,
+    - `email: string`
+    - `password: string`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
+
+- success body:
+    - `success: true`
+    - `message: New user create!`
+
+#### Block user
+
+Админ не может изменить пароль, ник или емали пользователя. Но он может его заблокировать.
+
+- Method: PUT
+- URL: admin/user
+
+- req body:
+    - `username: string`,
+    - `isBlock: boolean`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error! Incorrect req body` or `Not found user '${username}' in base` or `Error!`
+
+- success body:
+    - `success: true`
+    - `message: Success`
+
+#### Delete user
+
+Удаление пользователя из базы
+
+- Method: DELETE
+- URL: admin/user
+
+- req body:
+    - `username: string`,
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in body` or `Not found user '${username}' in base` or `Error!`
+
+- success body:
+    - `success: true`
+    - `message: Success`
+
 ### В разработке
 
 Если останется время - кредиты и депозиты.
