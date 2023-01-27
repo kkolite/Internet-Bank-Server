@@ -215,6 +215,26 @@ class userController {
             })
         }
     }
+
+    async isUser(req, res) {
+        const {username} = req.query;
+        const user = await User.findOne({username})
+        if (!user) {
+            return res
+            .status(404)
+            .json({
+                message: `${username} not found`,
+                success: false,
+            });
+        }
+
+        return res
+        .status(200)
+        .json({
+            message: `Success!`,
+            success: true,
+        });
+    }
 }
 
 module.exports = new userController();
