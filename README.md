@@ -9,7 +9,7 @@
 Регистрация пользователя в нашей базе. Необходимо передать ник, почту и пароль. **Валидация должна быть на фронтенде**. Вовзращает состояние выполненной операции (успех или неудача) и сообщение (успех или причина ошибки).
 
 - Method: POST
-- URL: /registration
+- URL: user/registration
 
 - req body:
     - `username: string`,
@@ -31,7 +31,7 @@
 Авторизация клиента. Передается ник и пароль. В ответ может вернуться ошибка с сообщением о причине ошибки. Успешное выполнение помимо статуса выполнения операции возвращает токен и информацию о пользователе (ник, количество денег, является ли пользователь админом, находится ли пользователь в блокировке).
 
 - Method: POST
-- URL: /login
+- URL: user/login
 
 - req body:
     - `username: string`,
@@ -60,7 +60,7 @@
 Поиск клиента в нашей базе по его нику. Возвращает `true` или `false` без никакой другой информации о пользователе.
 
 - Method: GET
-- URL: /check
+- URL: user/check
 
 - req query: `username`
 
@@ -73,7 +73,7 @@
 Получение информации о пользователе. Проверка осуществляется по токену. Необходимо делать при выполнении операций (обновление количества денег, проверка, является ли Вася Васей и т.д.).
 
 - Method: GET
-- URL: /
+- URL: /user
 
 - req header: `Authorization: Bearer ${token}`
 
@@ -94,8 +94,8 @@
 
 Обновление данных пользователя. Принимает ник, почту и пароль.
 
-- Method: GET
-- URL: /
+- Method: PUT
+- URL: /user
 
 In progess
 
@@ -103,8 +103,8 @@ In progess
 
 Удаление пользователя. Помимо токена для верификации необходимо запросить у клиента его пароль и передать его на сервер.
 
-- Method: GET
-- URL: /
+- Method: DELETE
+- URL: /user
 
 - req header: `Authorization: Bearer ${token}`
 - req body: `password: string`
@@ -116,3 +116,28 @@ In progess
 - error bodies:
     - `success: false`
     - `message`: `Error! No token or/and password. Need to login` or `Error!`
+
+### Money
+
+#### Add or remove money
+
+Простое управление деньгами на счету клиента. Можно либо списать их со счета, либо наоборот добавить денег пользователю. Нужная сумма операции и ее ID передаются в теле, ее тип (зачисление либо снятие) - в параметрах.. Авторизация проиходит по токену в хедере.
+
+Планируется добавить дополнительную верификацию (клиенту на почту придет пинкод).
+
+- Method: POST
+- Url: /money
+
+- req header: `Authorization: Bearer ${token}`
+- req query: `operation`: `add` or `remove`
+- req body: 
+    - `money: number`
+    - `ID: number`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! Incorrect query string or money` or `No enough money!` or `Error!`
