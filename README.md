@@ -128,7 +128,7 @@ In progess
 Планируется добавить дополнительную верификацию (клиенту на почту придет пинкод).
 
 - Method: POST
-- Url: /money
+- URL: /money
 
 - req header: `Authorization: Bearer ${token}`
 - req query: `operation`: `add` or `remove`
@@ -149,7 +149,7 @@ In progess
 Перевод денег между клиентами. Отправитель должен быть авторизирован, получатель определяется по нику.
 
 - Method: POST
-- Url: /money/transfer
+- URL: /money/transfer
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -173,7 +173,7 @@ In progess
 Для операций без участия счета клиента (оплата товаров карточкой, перевод между картчоками итд). Это не пустышка: комиссия идет на счет самого банка.
 
 - Method: POST
-- Url: /money/commission
+- URL: /money/commission
 
 - req body: 
     - `money: number`
@@ -200,6 +200,81 @@ In progess
 Также он имеет доступ к базе данных самого банка, в которой содержатся:
 - Количество собственных денег у банка
 - Статистика по выполненным операциям
+
+#### Check
+
+Проверка по токену, является ли пользователь админом
+
+- Method: GET
+- URL: /admin
+
+- req header: `Authorization: Bearer ${token}`
+
+- res body:
+    - `message: Success`
+    - `success: true`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
+
+#### Get bank info
+
+Получение ифнормации о счете банка. Их может быть несколько, есть опция передать название нужного счета. По умолчанию - счет из конфига сервера.
+
+- Method: GET
+- URL: /admin/bank
+
+- req header: `Authorization: Bearer ${token}`
+- req query(optional): `bankname: string`
+  
+- res body:
+    - `message: Success`
+    - `success: true`
+    - `bank`:
+        - `bankname`
+        - `money`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
+
+#### Get user database
+
+Получение базы данных всех пользователей. Эх, он и пароли возвращает, надо бы починить эту "фичу".
+
+- Method: GET
+- URL: /admin/database
+
+- req header: `Authorization: Bearer ${token}`
+  
+- res body:
+    - `message: Success`
+    - `success: true`
+    - `database`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
+
+#### Get user info
+
+Получает информацию о конкретном пользователе по его нику. Возвращает пароли (исправить).
+
+- Method: GET
+- URL: /admin/user
+
+- req header: `Authorization: Bearer ${token}`
+- req query: `username: string`
+  
+- res body:
+    - `message: Success`
+    - `success: true`
+    - `user`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in header` or `Not found user '${username}' in base` or `Error!`
 
 ### В разработке
 
