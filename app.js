@@ -8,14 +8,16 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const router = require('./router');
+const userRouter = require('./user/userRouter');
+const moneyRouter = require('./money/moneyRouter')
 
 const port = process.env.PORT || 3000;
 const MONGO_URL = `mongodb://qwerty:9Ij62MhBMOLIoZQ5@ac-ek4wj69-shard-00-00.jmt0gmm.mongodb.net:27017,ac-ek4wj69-shard-00-01.jmt0gmm.mongodb.net:27017,ac-ek4wj69-shard-00-02.jmt0gmm.mongodb.net:27017/?ssl=true&replicaSet=atlas-12rcvp-shard-0&authSource=admin&retryWrites=true&w=majority`
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/user', router);
+app.use('/user', userRouter);
+app.use('/money', moneyRouter);
 
 async function start() {
 	try {
@@ -30,25 +32,3 @@ async function start() {
 }
 
 start();
-/*app.post('/main', (req, res) => {
-	console.log(req.body.name);
-	if (req.body.name === 'Yahor') {
-		return res
-	.status(200)
-	.json({
-		name: 'Yahor',
-		number: 5,
-		info: 'Ratata'
-	})
-	} else {
-		return res
-		.status(200)
-		.json({
-			name: 'Gujob'
-		})
-	}
-})
-
-app.listen(port, function () {
-	console.log(`Server listens ${port}`);
-});*/

@@ -4,12 +4,12 @@
 // Обновление данных - логин (+токен в хедере)
 // Удаление - логин, пароль (+токен в хедере)
 
-const User = require('./models/user');
+const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {secret} = require('./config');
+const {secret} = require('../config');
 
-class Controller {
+class userController {
     async newUser(req, res) {
         try {
             const { username, email, password } = req.body;
@@ -195,7 +195,7 @@ class Controller {
 
             const token = req.headers.authorization.split(' ')[1];
             const payload = jwt.verify(token, secret);
-            const user = await User.updateOne({_id: payload.id}, {
+            await User.updateOne({_id: payload.id}, {
                 username,
                 email,
                 password,
@@ -217,4 +217,4 @@ class Controller {
     }
 }
 
-module.exports = new Controller();
+module.exports = new userController();
