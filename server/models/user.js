@@ -6,6 +6,7 @@ const User = new Schema({
     email: {type: String, required: true},
     isAdmin: {type: Boolean, default: false},
     isBlock: {type: Boolean, default: false},
+    verifyCode: {type: Number, default: 0},
     money: {type: Number, default: 100}
 })
 

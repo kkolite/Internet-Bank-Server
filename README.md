@@ -2,9 +2,30 @@
 
 Данный сервер написан для работы курсового проекта [Интернет-Банк](https://github.com/kkolite/Internet-Bank)
 
-- [Сценарий Пользователя](#сценарий-пользователя)
-- [Сценарий Денег](#сценарий-денег)
-- [Сценарий Админа](#сценарий-админа)
+- [Internet-Bank Server](#internet-bank-server)
+  - [Сценарий Пользователя](#сценарий-пользователя)
+    - [Registration](#registration)
+    - [Login](#login)
+    - [Verify](#verify)
+    - [Check user in DB](#check-user-in-db)
+    - [User](#user)
+      - [GET](#get)
+      - [PUT](#put)
+      - [DELETE](#delete)
+  - [Сценарий Денег](#сценарий-денег)
+      - [Add or remove money](#add-or-remove-money)
+      - [Transfer between clients](#transfer-between-clients)
+      - [Перевод с/на/между карточками](#перевод-снамежду-карточками)
+      - [Commission](#commission)
+  - [Сценарий Админа](#сценарий-админа)
+      - [Check](#check)
+      - [Get bank info](#get-bank-info)
+      - [Get user database](#get-user-database)
+      - [Get user info](#get-user-info)
+      - [Create new user](#create-new-user)
+      - [Block user](#block-user)
+      - [Delete user](#delete-user)
+    - [В разработке](#в-разработке)
 
 ## Сценарий Пользователя 
 
@@ -29,10 +50,9 @@
     - `success: true`
     - `message: New user create!`
                
-
 ### Login
 
-Авторизация клиента. Передается ник и пароль. В ответ может вернуться ошибка с сообщением о причине ошибки. Успешное выполнение помимо статуса выполнения операции возвращает токен и информацию о пользователе (ник, количество денег, является ли пользователь админом, находится ли пользователь в блокировке).
+Авторизация клиента. Передается ник и пароль.
 
 - Method: POST
 - URL: user/login
@@ -40,6 +60,25 @@
 - req body:
     - `username: string`,
     - `password: string`
+
+- res body: 
+    - `message: Success!`,
+    - `success: true`,
+
+- error bodies:
+    - `success: false`,
+    - `message`:`${username} not found` or `Invalid password` or `Error!` or `User not found during creating secure code`
+
+### Verify
+
+Проверка кода, который пришел на почту. В ответ может вернуться ошибка с сообщением о причине ошибки. Успешное выполнение помимо статуса выполнения операции возвращает токен и информацию о пользователе (ник, количество денег, является ли пользователь админом, находится ли пользователь в блокировке).
+
+- Method: POST
+- URL: user/verify
+
+- req body:
+    - `username: string`,
+    - `code: number`
 
 - res body: 
     - `message: Success!`,
@@ -57,7 +96,7 @@
 
 - error bodies:
     - `success: false`,
-    - `message`:`${username} not found` or `Invalid password` or `Error!`
+    - `message`:`${username} not found` or `Invalid req body` or `Error!` or `User not found during check secure code` or `Invalid code`
 
 ### Check user in DB
 
@@ -172,7 +211,7 @@ In progess
 
 Планируется реализовать с помощью метода обычного метода добавления/убавления средств со счета. Поверх реализована "проверка" картчоки (рандомно с вероятностью 20% кидать ошибку о некорректной карточке)
 
-#### Комиссия банку
+#### Commission
 
 Для операций без участия счета клиента (оплата товаров карточкой, перевод между картчоками итд). Это не пустышка: комиссия идет на счет самого банка.
 
@@ -347,4 +386,10 @@ In progess
 
 ### В разработке
 
-Если останется время - кредиты и депозиты.
+- Кредиты (money)
+- Депозиты (money)
+- Валютный счет (money/user) - EUR, GBP
+- Обмен валют (money)
+- Создание чека операции (money)
+- Получение данных по всем счетам (админ или общий?)
+- История операций (user)

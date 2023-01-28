@@ -9,6 +9,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {secret} = require('../config');
 const createUser = require('./createUser');
+const createCode = require('./createCode');
+const confirmCode = require('./confirmCode');
 
 class userController {
     async newUser(req, res) {
@@ -49,6 +51,48 @@ class userController {
                     message: 'Invalid password',
                     success: false,
                 });
+            }
+
+            const result = await createCode(user.username)
+            return res
+            .status(result.success ? 200 : 400)
+            .json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async verify(req,res) {
+        try {
+            const {username, code} = req.body;
+            if (!username || !code) {
+                return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: 'Invalid req body'
+                })
+            }
+
+            const user = await User.findOne({username})
+            if (!user) {
+                return res
+                .status(404)
+                .json({
+                    message: `${username} not found`,
+                    success: false,
+                });
+            }
+
+            const result = await confirmCode(username, code);
+            if (!result.success) {
+                return res
+                .status(400)
+                .json(result)
             }
 
             const token = jwt.sign({id: user._id}, secret);
