@@ -3,8 +3,7 @@ const Bank = require('../models/bank');
 const config = require('../config');
 const adminCheck = require('./adminCheck');
 const createNew = require('../user/createUser');
-const { deleteUser } = require('../user/userController');
-const { findOne } = require('../models/user');
+const clearDatabase = require('./clearDatabase');
 
 class adminController{
     async check(req,res) {
@@ -59,12 +58,13 @@ class adminController{
                 .json(result)
             }
             const database = await User.find();
+            const safeDatabase = clearDatabase(database);
             return res
             .status(200)
             .json({
                 success: true,
                 message: "Success",
-                database
+                safeDatabase
             })
         } catch (error) {
             console.log(error);
@@ -107,7 +107,12 @@ class adminController{
             .json({
                 success: true,
                 message: 'Success',
-                user
+                userConfig: {
+                    username: user.username,
+                    email: user.email,
+                    isBlock: user.isBlock,
+                    isAdmin: user.isAdmin
+                }
             })
         } catch (error) {
             console.log(error);

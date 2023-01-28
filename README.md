@@ -245,7 +245,7 @@ In progess
 
 #### Get user database
 
-Получение базы данных всех пользователей. Эх, он и пароли возвращает, надо бы починить эту "фичу".
+Получение базы данных всех пользователей. Возвращает только "безопасные" данные. Никаких паролей и айдишников.
 
 - Method: GET
 - URL: /admin/database
@@ -255,7 +255,11 @@ In progess
 - res body:
     - `message: Success`
     - `success: true`
-    - `database`
+    - `database`:
+        - `username`
+        - `email`
+        - `isAdmin`
+        - `isBlock`
 
 - error bodies:
     - `success: false`
@@ -263,7 +267,7 @@ In progess
 
 #### Get user info
 
-Получает информацию о конкретном пользователе по его нику. Возвращает пароли (исправить).
+Получает информацию о конкретном пользователе по его нику.
 
 - Method: GET
 - URL: /admin/user
@@ -274,7 +278,11 @@ In progess
 - res body:
     - `message: Success`
     - `success: true`
-    - `user`
+    - `user`:
+        - `username`
+        - `email`
+        - `isAdmin`
+        - `isBlock`
 
 - error bodies:
     - `success: false`
