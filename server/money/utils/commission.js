@@ -1,5 +1,5 @@
-const Bank = require('../models/bank');
-const {bankKey} = require('../config');
+const Bank = require('../../models/bank');
+const {bankKey} = require('../../config');
 
 module.exports = async function commission(money, percent) {
     const commPayment = money * (percent / 100);

@@ -3,7 +3,7 @@
 // 0217 4097
 // 1126 1306
 
-const User = require('../models/user');
+const User = require('../../models/user');
 const nodemailer = require('nodemailer');
 
 function randomKey() {

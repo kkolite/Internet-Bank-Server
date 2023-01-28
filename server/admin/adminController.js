@@ -1,9 +1,9 @@
 const User = require('../models/user');
 const Bank = require('../models/bank');
 const config = require('../config');
-const adminCheck = require('./adminCheck');
-const createNew = require('../user/createUser');
-const clearDatabase = require('./clearDatabase');
+const adminCheck = require('./utils/adminCheck');
+const createNew = require('../user/utils/createUser');
+const clearDatabase = require('./utils/clearDatabase');
 const getAll = require('../statistics/getAll');
 const getOne = require('../statistics/getOne');
 

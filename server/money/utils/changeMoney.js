@@ -1,8 +1,8 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 const jwt = require('jsonwebtoken');
-const {secret} = require('../config');
-const update = require('../statistics/update');
-const updateLastFive = require('../statistics/updateLastFive');
+const {secret} = require('../../config');
+const update = require('../../statistics/update');
+const updateLastFive = require('../../statistics/updateLastFive');
 
 module.exports = async function(req) {
     const {money, operationID} = req.body;

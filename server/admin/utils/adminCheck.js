@@ -1,6 +1,6 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 const jwt = require('jsonwebtoken');
-const {secret} = require('../config');
+const {secret} = require('../../config');
 
 module.exports = async function(req) {
     const header = req.headers.authorization;

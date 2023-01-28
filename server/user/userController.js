@@ -8,9 +8,9 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {secret} = require('../config');
-const createUser = require('./createUser');
-const createCode = require('./createCode');
-const confirmCode = require('./confirmCode');
+const createUser = require('./utils/createUser');
+const createCode = require('./utils/createCode');
+const confirmCode = require('./utils/confirmCode');
 
 class userController {
     async newUser(req, res) {

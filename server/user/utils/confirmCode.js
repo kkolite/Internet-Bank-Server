@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 
 module.exports = async function(username, code) {
     const user = await User.findOne({username});

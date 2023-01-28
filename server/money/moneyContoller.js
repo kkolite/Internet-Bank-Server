@@ -1,8 +1,8 @@
-const commission = require('./commission');
+const commission = require('./utils/commission');
 const config = require('../config');
 const update = require('../statistics/update');
-const changeMoney = require('./changeMoney');
-const transferMoney = require('./transferMoney');
+const changeMoney = require('./utils/changeMoney');
+const transferMoney = require('./utils/transferMoney');
 
 class moneyController {
     async change(req, res) {
