@@ -125,7 +125,8 @@
         - `username: string`,
         - `money: number`,
         - `isAdmin: boolean`,
-        - `isBlock: boolean`
+        - `isBlock: boolean`,
+        - `lastFive`
 
 - error bodies:
     - `success: false`
@@ -320,6 +321,7 @@ In progess
         - `email`
         - `isAdmin`
         - `isBlock`
+        - `lastFive`
 
 - error bodies:
     - `success: false`
@@ -411,4 +413,3 @@ In progess
 - Обмен валют (money)
 - Создание чека операции (money)
 - Получение данных по всем счетам (админ или общий?)
-- История операций (user)

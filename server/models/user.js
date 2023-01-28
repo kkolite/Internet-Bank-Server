@@ -7,7 +7,8 @@ const User = new Schema({
     isAdmin: {type: Boolean, default: false},
     isBlock: {type: Boolean, default: false},
     verifyCode: {type: Number, default: 0},
-    money: {type: Number, default: 100}
+    money: {type: Number, default: 100},
+    lastFive: [{operationID: Number, date: Date, money: Number}]
 })
 
 module.exports = model('User', User)

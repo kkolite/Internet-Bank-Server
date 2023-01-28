@@ -141,7 +141,8 @@ class userController {
                     username: user.username,
                     money: user.money,
                     isAdmin: user.isAdmin,
-                    isBlock: user.isBlock
+                    isBlock: user.isBlock,
+                    lastFive: user.lastFive
                 }
             });
         } catch (error) {

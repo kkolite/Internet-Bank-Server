@@ -113,7 +113,8 @@ class adminController{
                     username: user.username,
                     email: user.email,
                     isBlock: user.isBlock,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.isAdmin,
+                    lastFive: user.lastFive,
                 }
             })
         } catch (error) {
