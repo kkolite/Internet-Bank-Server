@@ -4,6 +4,8 @@ const config = require('../config');
 const adminCheck = require('./adminCheck');
 const createNew = require('../user/createUser');
 const clearDatabase = require('./clearDatabase');
+const getAll = require('../statistics/getAll');
+const getOne = require('../statistics/getOne');
 
 class adminController{
     async check(req,res) {
@@ -227,6 +229,29 @@ class adminController{
                 message: 'Success!',
                 success: true,
             });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            });
+        }
+    }
+
+    async getStatistics(req,res) {
+        try {
+            const check = await adminCheck(req);
+            if (!check.success) {
+                    return res
+                    .status(400)
+                    .json(check)
+                }
+
+            const {operationID} = req.query;
+            const result = operationID ? await getOne(operationID) : await getAll();
+            return res
+            .status(result.success ? 200 : 404)
+            .json(result);
         } catch (error) {
             console.log(error);
             res.status(400).json({

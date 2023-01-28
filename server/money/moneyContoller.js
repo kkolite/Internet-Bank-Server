@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const {secret} = require('../config');
 const commission = require('./commission');
 const config = require('../config');
+const update = require('../statistics/update');
 
 class moneyController {
     async change(req, res) {
@@ -48,6 +49,7 @@ class moneyController {
             await User.updateOne({_id: payload.id}, {
                 money: newMoney
             });
+            await update(operationID, money);
 
             return res
             .status(200)
@@ -74,7 +76,7 @@ class moneyController {
                 })
             }
 
-            const {toUsername, money} = req.body;
+            const {toUsername, money, operationID} = req.body;
             const token = req.headers.authorization.split(' ')[1];
             const payload = jwt.verify(token, secret);
             const userOne = await User.findOne({_id: payload.id});
@@ -105,6 +107,9 @@ class moneyController {
             await User.updateOne({username: toUsername}, {
                 money: moneyTwo
             });
+
+            await update(operationID, money);
+
             return res
             .status(200)
             .json({
@@ -131,6 +136,9 @@ class moneyController {
             }
             await commission(money, config.commission);
             const moneyPay = money * ((100 - 2)/100);
+
+            await update(operationID, money);
+
             return res
             .status(200)
             .json({

@@ -22,7 +22,8 @@
     - [Create new user](#create-new-user)
     - [Block user](#block-user)
     - [Delete user](#delete-user)
-  - [В разработке](#в-разработке)
+    - [Get operation's statistics](#get-operations-statistics)
+- [В разработке](#в-разработке)
 
 ## Сценарий Пользователя 
 
@@ -336,13 +337,13 @@ In progess
     - `email: string`
     - `password: string`
 
+- res body:
+    - `success: true`
+    - `message: New user create!`
+
 - error bodies:
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
-
-- success body:
-    - `success: true`
-    - `message: New user create!`
 
 #### Block user
 
@@ -355,13 +356,13 @@ In progess
     - `username: string`,
     - `isBlock: boolean`
 
+- res body:
+    - `success: true`
+    - `message: Success`
+
 - error bodies:
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error! Incorrect req body` or `Not found user '${username}' in base` or `Error!`
-
-- success body:
-    - `success: true`
-    - `message: Success`
 
 #### Delete user
 
@@ -373,15 +374,36 @@ In progess
 - req body:
     - `username: string`,
 
+- res body:
+    - `success: true`
+    - `message: Success`
+
 - error bodies:
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in body` or `Not found user '${username}' in base` or `Error!`
 
-- success body:
+#### Get operation's statistics
+
+Возвращает статистику по операциям: сколько раз выполнялись, сколько денег прошло. При передаче в параметрах айдишника операции вернет данные по конкретной операции.
+
+- Method: GET
+- URL: admin/statistics
+
+- req query?: `operationID: number`
+
+- res body: 
     - `success: true`
     - `message: Success`
+    - `statistics`
+        - `operationID: number`
+        - `count: number`
+        - `money: number`
 
-### В разработке
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Not found operation` or `Error! Empty/broken statistics` or `Error`
+
+## В разработке
 
 - Кредиты (money)
 - Депозиты (money)
