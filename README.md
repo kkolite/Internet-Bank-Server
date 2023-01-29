@@ -13,6 +13,8 @@
 - [Сценарий Денег](#сценарий-денег)
     - [Add or remove money](#add-or-remove-money)
     - [Transfer between clients](#transfer-between-clients)
+    - [New currency account](#new-currency-account)
+    - [Delete currency account](#delete-currency-account)
     - [Currency exchange](#currency-exchange)
     - [Commission](#commission)
 - [Сценарий Админа](#сценарий-админа)
@@ -225,6 +227,46 @@ In progess
 - error bodies:
     - `success: false`
     - `message`: `Error! No token. Need to login` or `User not found!` or `No enough money!` or `Error!`
+
+#### New currency account
+
+Создает новый валютный счет. Если такая валюта уже есть у пользователя - возвращается ошибка.
+
+- Method: POST
+- URL: /money/account
+
+- req header: `Authorization: Bearer ${token}`
+- req body: 
+    - `username: string`
+    - `currency: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Not found user` or `You already have ${currency} account` or `Invalid req body` or `Error!`
+
+#### Delete currency account
+
+Удаляет валютный счет.
+
+- Method: DELETE
+- URL: /money/account
+
+- req header: `Authorization: Bearer ${token}`
+- req body: 
+    - `username: string`
+    - `currency: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Not found user` or `You already have ${currency} account` or `Invalid req body` or `Error!`
 
 #### Currency exchange
 
@@ -447,3 +489,4 @@ In progess
 
 - Кредиты (money)
 - Депозиты (money)
+- Создание, удаление и редактирование валютных счетов

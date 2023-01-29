@@ -8,10 +8,10 @@ const {secret} = require('../../config');
 module.exports = async function(req) {
     const header = req.headers.authorization;
     if (!header) {
-        return res.status(403).json({
+        return {
             message: 'Error! No token. Need to login',
             success: false,
-        })
+        }
     }
 
     const token = req.headers.authorization.split(' ')[1];

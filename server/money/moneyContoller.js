@@ -5,6 +5,8 @@ const changeMoney = require('./utils/changeMoney');
 const transferMoney = require('./utils/transferMoney');
 const anonimExchange = require('./utils/anonimExchange');
 const clientExchange = require('./utils/clientExchange');
+const createAccount = require('./utils/bankAccounts/createAccount');
+const deleteAccount = require('./utils/bankAccounts/deleteAccount');
 
 class moneyController {
     async change(req, res) {
@@ -99,6 +101,36 @@ class moneyController {
             return res
             .status(exchange.success ? 200 : 400)
             .json(exchange);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async newCurrencyAccount(req,res) {
+        try {
+            const create = await createAccount(req);
+            return res
+            .status(create.success ? 201 : 400)
+            .json(create);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async deleteCurrencyAccount(req,res) {
+        try {
+            const result = await deleteAccount(req);
+            return res
+            .status(result.success ? 201 : 400)
+            .json(result);
         } catch (error) {
             console.log(error);
             res.status(400).json({

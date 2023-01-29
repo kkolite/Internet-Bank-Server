@@ -1,6 +1,17 @@
 const User = require('../../../models/user');
+const userCheck = require('../../../user/utils/userCheck');
 
-module.exports = async function(username, currency) {
+module.exports = async function(req) {
+    const check = await userCheck(req);
+    if (!check.success) return check;
+
+    const {username, currency} = req.body;
+    if(!username || !currency) {
+        return {
+            success: false,
+            message: `Invalid req body`
+        }
+    }
     const user = await User.findOne({username});
     const arr = [...user.accounts];
     const isUniq = arr.find((el) => el.currency === currency);
