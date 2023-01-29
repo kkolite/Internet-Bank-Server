@@ -3,6 +3,8 @@ const config = require('../config');
 const update = require('../statistics/update');
 const changeMoney = require('./utils/changeMoney');
 const transferMoney = require('./utils/transferMoney');
+const anonimExchange = require('./utils/anonimExchange');
+const clientExchange = require('./utils/clientExchange');
 
 class moneyController {
     async change(req, res) {
@@ -75,6 +77,28 @@ class moneyController {
                 moneyPay,
                 commission: config.commission
             })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async currencyExchange(req,res) {
+        try {
+            const {client} = req.query;
+            if (!client) {
+                const exchange = await anonimExchange(req);
+                return res
+                .status(exchange.success ? 200 : 400)
+                .json(exchange);
+            }
+            const exchange = await clientExchange(req);
+            return res
+            .status(exchange.success ? 200 : 400)
+            .json(exchange);
         } catch (error) {
             console.log(error);
             res.status(400).json({

@@ -8,7 +8,8 @@ const User = new Schema({
     isBlock: {type: Boolean, default: false},
     verifyCode: {type: Number, default: 0},
     money: {type: Number, default: 100},
-    lastFive: [{operationID: Number, date: Date, money: Number}]
+    lastFive: [{operationID: Number, date: Date, money: Number}],
+    accounts: [{currency: String, money: Number}]
 })
 
 module.exports = model('User', User)

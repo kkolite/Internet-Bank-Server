@@ -206,9 +206,27 @@ In progess
     - `success: false`
     - `message`: `Error! No token. Need to login` or `User not found!` or `No enough money!` or `Error!`
 
-#### Перевод с/на/между карточками
+#### Currency exchange
 
-Планируется реализовать с помощью метода обычного метода добавления/убавления средств со счета. Поверх реализована "проверка" картчоки (рандомно с вероятностью 20% кидать ошибку о некорректной карточке)
+Обмен валюты. Возможно два сценария - в рамках счетов одного клиента или анонимно (между карточками). Во втором варианте есть комиссия. При первом необходимо передать токен, параметры, а также дополнительное свойтсво в теле запроса (вторая валюта).
+
+- Method: POST
+- URL: /money/exchange
+
+- req header?: `Authorization: Bearer ${token}`
+- req query?: `client=true`
+- req body: 
+    - `money: number`
+    - `currencyOne: string`
+    - ?`currencyTwo: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `User not found!` or `No enough money!` or `Invalid req body` or `Error!`
 
 #### Commission
 
@@ -409,7 +427,5 @@ In progess
 
 - Кредиты (money)
 - Депозиты (money)
-- Валютный счет (money/user) - EUR, GBP
-- Обмен валют (money)
 - Создание чека операции (money)
-- Получение данных по всем счетам (админ или общий?)
+- Ресет пароля
