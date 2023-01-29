@@ -1,6 +1,6 @@
-const Statistics = require('../models/statistics');
+import Statistics from '../models/statistics.js';
 
-module.exports = async function(operationID, money) {
+export default async function(operationID, money) {
     const statistics = new Statistics({
         operationID,
         count: 1,

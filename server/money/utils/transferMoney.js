@@ -1,13 +1,15 @@
-const User = require('../../models/user');
-const jwt = require('jsonwebtoken');
-const {secret} = require('../../config');
-const update = require('../../statistics/update');
-const updateLastFive = require('../../statistics/updateLastFive');
+import User from '../../models/user.js';
+import jwt from 'jsonwebtoken';
+import { secret } from '../../config.js';
+import update from '../../statistics/update.js';
+import updateLastFive from '../../statistics/updateLastFive.js';
 
-module.exports = async function(req) {
+const { verify } = jwt;
+
+export default async function(req) {
     const {toUsername, money, operationID} = req.body;
     const token = req.headers.authorization.split(' ')[1];
-    const payload = jwt.verify(token, secret);
+    const payload = verify(token, secret);
     const userOne = await User.findOne({_id: payload.id});
 
     if(money > userOne.money) {

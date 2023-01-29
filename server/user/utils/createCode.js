@@ -4,8 +4,8 @@
 // 1126 1306
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDUxNGZkMmY4MzMyODExZGRjZjEyNiIsImlhdCI6MTY3NDkyOTI0N30.1VUkbUkSl-UoAsNIMKlNoJdqUzS6xL-ryMQS6-snCuo
 
-const User = require('../../models/user');
-const sendEmail = require('./sendEmail');
+import User from '../../models/user.js';
+import sendEmail from './sendEmail.js';
 
 function randomKey() {
     const one = Math.floor(Math.random() * 10);
@@ -16,7 +16,7 @@ function randomKey() {
     return +key;
 }
 
-module.exports = async function(username) {
+export default async function(username) {
     const verifyCode = randomKey();
     const user = await User.findOne({username});
     if(!user) {

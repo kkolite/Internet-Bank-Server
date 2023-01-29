@@ -1,8 +1,8 @@
-const User = require('../../../models/user');
-const checkMoney = require('./checkMoney');
-const findAccount = require('./findAccount');
+import User from '../../../models/user.js';
+import checkMoney from './checkMoney.js';
+import findAccount from './findAccount.js';
 
-module.exports = async function(username, money, currency, operation) {
+export default async function(username, money, currency, operation) {
     const result = await findAccount(username,currency);
     if(!result.success) {
         return {
@@ -13,16 +13,18 @@ module.exports = async function(username, money, currency, operation) {
 
     let newMoney;
     if (operation === 'add') {
-        newMoney = result.user.money + money;
+        newMoney = result.account.money + money;
     }
     if (operation === 'remove') {
-        const isEnough = await checkMoney(username, money, currency);
-        if (!isEnough.success) {
+        const isEnough = result.account.money >= money;
+        console.log(isEnough)
+        if (!isEnough) {
             return {
                 success: false,
                 message: 'Error! Not enough money'
             }
         }
+        newMoney = result.account.money - money;
     }
     const arr = [...result.user.accounts];
     const newArr = arr.map((el) => {
@@ -32,6 +34,7 @@ module.exports = async function(username, money, currency, operation) {
                 money: newMoney
             }
         }
+        return el;
     });
 
     await User.updateOne({username}, {

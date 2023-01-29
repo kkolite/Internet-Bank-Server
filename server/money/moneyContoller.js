@@ -1,12 +1,14 @@
-const commission = require('./utils/commission');
-const config = require('../config');
-const update = require('../statistics/update');
-const changeMoney = require('./utils/changeMoney');
-const transferMoney = require('./utils/transferMoney');
-const anonimExchange = require('./utils/anonimExchange');
-const clientExchange = require('./utils/clientExchange');
-const createAccount = require('./utils/bankAccounts/createAccount');
-const deleteAccount = require('./utils/bankAccounts/deleteAccount');
+import commission from './utils/commission.js';
+import { commission as _commission } from '../config.js';
+import update from '../statistics/update.js';
+import changeMoney from './utils/changeMoney.js';
+import transferMoney from './utils/transferMoney.js';
+import anonimExchange from './utils/anonimExchange.js';
+import clientExchange from './utils/clientExchange.js';
+import createAccount from './utils/bankAccounts/createAccount.js';
+import deleteAccount from './utils/bankAccounts/deleteAccount.js';
+import addMoney from './utils/bankAccounts/addMoney.js';
+import removeMoney from './utils/bankAccounts/removeMoney.js';
 
 class moneyController {
     async change(req, res) {
@@ -66,7 +68,7 @@ class moneyController {
                     success: false,
                 })
             }
-            await commission(money, config.commission);
+            await commission(money, _commission);
             const moneyPay = money * ((100 - 2)/100);
 
             await update(operationID, money);
@@ -77,7 +79,7 @@ class moneyController {
                 success: true,
                 message: 'Success',
                 moneyPay,
-                commission: config.commission
+                commission: _commission
             })
         } catch (error) {
             console.log(error);
@@ -139,6 +141,43 @@ class moneyController {
             })
         }
     }
+
+    async changeAccountMoney(req,res) {
+        try {
+            const header = req.headers.authorization;
+            if (!header) {
+                return res.status(403).json({
+                    message: 'Error! No token. Need to login',
+                    success: false,
+                })
+            }
+            const {operation} = req.query;
+            if (!operation) {
+                return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: 'Invalid query'
+                })
+            }
+            let result;
+            if (operation === 'add') {
+                result = await addMoney(req);
+            }
+            if (operation === 'remove') {
+                result = await removeMoney(req);
+            }
+            return res
+            .status(result.success ? 201 : 400)
+            .json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
 }
 
-module.exports = new moneyController();
+export default new moneyController();

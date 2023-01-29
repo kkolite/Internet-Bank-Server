@@ -1,7 +1,8 @@
-const User = require('../../models/user');
-const bcrypt = require('bcryptjs');
+import User from '../../models/user.js';
+import pkg from 'bcryptjs';
 
-module.exports = async function createUser(req) {
+export default async function createUser(req) {
+    const { hashSync } = pkg;
     const { username, email, password } = req.body;
 
     if(!username || !email || !password) {
@@ -19,7 +20,7 @@ module.exports = async function createUser(req) {
         };
     }
 
-    const cryptoPassword = bcrypt.hashSync(password, 6);
+    const cryptoPassword = hashSync(password, 6);
     const userConfig = {
         username,
         password: cryptoPassword,

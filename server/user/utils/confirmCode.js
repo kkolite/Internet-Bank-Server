@@ -1,6 +1,6 @@
-const User = require('../../models/user');
+import User from '../../models/user.js';
 
-module.exports = async function(username, code) {
+export default async function(username, code) {
     const user = await User.findOne({username});
     if(!user) {
         return {

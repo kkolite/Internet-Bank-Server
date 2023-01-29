@@ -1,9 +1,9 @@
-const config = require("../../config");
-const update = require("../../statistics/update");
-const exchangeRate = require("./bankAccounts/exchangeRate");
-const commission = require("./commission");
+import { currencyCommission } from "../../config.js";
+import update from "../../statistics/update.js";
+import exchangeRate from "./bankAccounts/exchangeRate.js";
+import commission from "./commission.js";
 
-module.exports = async function(req) {
+export default async function(req) {
     const {currencyOne, money} = req.body;
     if (!currencyOne || !money) {
         return {
@@ -12,7 +12,7 @@ module.exports = async function(req) {
         }
     }
     let bankCurrency = money;
-    const percent = config.currencyCommission;
+    const percent = currencyCommission;
     if (currencyOne !== 'USD') {
         const data = await exchangeRate(currencyOne, 'USD', money);
         bankCurrency = data.new_amount;

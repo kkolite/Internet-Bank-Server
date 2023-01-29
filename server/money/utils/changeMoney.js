@@ -1,11 +1,13 @@
-const User = require('../../models/user');
-const jwt = require('jsonwebtoken');
-const {secret} = require('../../config');
-const update = require('../../statistics/update');
-const updateLastFive = require('../../statistics/updateLastFive');
+import User from '../../models/user.js';
+import jwb from 'jsonwebtoken';
+import { secret } from '../../config.js';
+import update from '../../statistics/update.js';
+import updateLastFive from '../../statistics/updateLastFive.js';
 
-module.exports = async function(req) {
-    const {money, operationID} = req.body;
+const { verify } = jwb;
+
+export default async function(req) {
+    const {money} = req.body;
     const {operation} = req.query;
 
     if(operation !== 'add' && operation !== 'remove' || !money) {
@@ -16,7 +18,7 @@ module.exports = async function(req) {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const payload = jwt.verify(token, secret);
+    const payload = verify(token, secret);
     const user = await User.findOne({_id: payload.id});
 
     let newMoney = 0;
@@ -39,6 +41,7 @@ module.exports = async function(req) {
         money: newMoney
     });
 
+    const operationID = operation === 'add' ? 5 : 6;
     await update(operationID, money);
     await updateLastFive(user.username, operationID, money);
     return {

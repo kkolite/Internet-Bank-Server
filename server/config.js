@@ -1,6 +1,4 @@
-module.exports = {
-    secret: 'my-secret-key',
-    bankKey: 'Bank1',
-    commission: 2,
-    currencyCommission: 3
-}
+export const secret = 'my-secret-key';
+export const bankKey = 'Bank1';
+export const commission = 2;
+export const currencyCommission = 3;

@@ -198,7 +198,6 @@ In progess
 - req query: `operation`: `add` or `remove`
 - req body: 
     - `money: number`
-    - `ID: number`
 
 - res body:
     - `success: true`
@@ -219,6 +218,7 @@ In progess
 - req body: 
     - `money: number`
     - `toUsername: string`
+    - `operationID: number`
 
 - res body:
     - `success: true`
@@ -267,6 +267,28 @@ In progess
 - error bodies:
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Not found user` or `You already have ${currency} account` or `Invalid req body` or `Error!`
+
+#### Add money to currency account
+
+Пополнение или снятие с валютного счета.
+
+- Method: PUT
+- URL: /money/account
+
+- req header: `Authorization: Bearer ${token}`
+- req query: `operation` = `add` or `remove`
+- req body: 
+    - `username: string`
+    - `currency: string`
+    - `money: number`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! No token. Need to login` or `Not found user` or `Not enough money` or `Invalid req body` or `Error!
 
 #### Currency exchange
 
@@ -489,4 +511,3 @@ In progess
 
 - Кредиты (money)
 - Депозиты (money)
-- Создание, удаление и редактирование валютных счетов

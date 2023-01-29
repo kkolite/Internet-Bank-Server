@@ -1,6 +1,6 @@
-const Router = require('express');
+import Router from 'express';
 const router = new Router();
-const controller = require('./adminController');
+import controller from './adminController.js';
 
 router.get('/', controller.check);
 router.get('/bank', controller.getBank);
@@ -11,4 +11,4 @@ router.put('/user', controller.blockUser);
 router.delete('/user', controller.deleteUser);
 router.get('/statistics', controller.getStatistics);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const Statistics = require('../models/statistics');
-const create = require('./create');
+import Statistics from '../models/statistics.js';
+import create from './create.js';
 
-module.exports = async function(operationID, money) {
+export default async function(operationID, money) {
     const statistics = await Statistics.findOne({operationID});
     if (!statistics) {
         const result = await create(operationID, money);

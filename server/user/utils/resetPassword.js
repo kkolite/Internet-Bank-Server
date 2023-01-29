@@ -1,5 +1,6 @@
-const User = require("../../models/user");
-const sendEmail = require("./sendEmail");
+import User from "../../models/user.js";
+import sendEmail from "./sendEmail.js";
+import bcrypt from "bcryptjs";
 
 function randomPassword() {
     const one = Math.floor(Math.random() * 100);
@@ -9,7 +10,7 @@ function randomPassword() {
     return `${one}${two}${three}${four}`;
 }
 
-module.exports = async function(req) {
+export default async function(req) {
     const {username, email} = req.body;
     if (!username || !email) {
         return {

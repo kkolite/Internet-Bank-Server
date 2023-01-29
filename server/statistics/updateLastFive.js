@@ -1,6 +1,6 @@
-const User = require('../models/user');
+import User from '../models/user.js';
 
-module.exports = async function(username, operationID, money) {
+export default async function(username, operationID, money) {
     const user = await User.findOne({username});
     const arr = [...user.lastFive];
     if (arr.length === 5) {

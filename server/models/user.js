@@ -1,4 +1,5 @@
-const {Schema, model} = require('mongoose')
+import mng from 'mongoose';
+const { Schema, model } = mng;
 
 const User = new Schema({
     username: {type: String, unique: true, required: true},
@@ -12,4 +13,4 @@ const User = new Schema({
     accounts: [{currency: String, money: Number}]
 })
 
-module.exports = model('User', User)
+export default model('User', User)

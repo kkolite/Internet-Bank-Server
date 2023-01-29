@@ -1,4 +1,4 @@
-module.exports = function clearDatabase(database) {
+export default function clearDatabase(database) {
     if (database.length) {
         return database.map((el) => clearDatabase(el));
     }

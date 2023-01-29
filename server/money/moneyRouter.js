@@ -1,12 +1,13 @@
-const Router = require('express');
+import Router from 'express';
 const router = new Router();
-const moneyController = require('./moneyContoller');
+import moneyController from './moneyContoller.js';
 
 router.post('/', moneyController.change);
 router.post('/transfer', moneyController.transfer);
 router.post('/commission', moneyController.commissionToBank);
 router.post('/exchange', moneyController.currencyExchange);
 router.post('/account', moneyController.newCurrencyAccount);
+router.put('/account', moneyController.changeAccountMoney);
 router.delete('/account', moneyController.deleteCurrencyAccount);
 
-module.exports = router;
+export default router;

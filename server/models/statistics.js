@@ -1,4 +1,5 @@
-const {Schema, model} = require('mongoose')
+import mng from 'mongoose';
+const { Schema, model } = mng;
 
 const Statistics = new Schema({
     operationID: {type: Number, unique: true, required: true},
@@ -6,4 +7,4 @@ const Statistics = new Schema({
     money: {type: Number, required: true},
 })
 
-module.exports = model('Statistics', Statistics)
+export default model('Statistics', Statistics)

@@ -1,7 +1,7 @@
-const User = require('../../../models/user');
-const userCheck = require('../../../user/utils/userCheck');
+import User from '../../../models/user.js';
+import userCheck from '../../../user/utils/userCheck.js';
 
-module.exports = async function(req) {
+export default async function(req) {
     const check = await userCheck(req);
     if (!check.success) return check;
 

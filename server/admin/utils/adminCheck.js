@@ -1,8 +1,8 @@
-const User = require('../../models/user');
-const jwt = require('jsonwebtoken');
-const {secret} = require('../../config');
+import User from '../../models/user.js';
+import { verify } from 'jsonwebtoken';
+import { secret } from '../../config.js';
 
-module.exports = async function(req) {
+export default async function(req) {
     const header = req.headers.authorization;
         if (!header) {
             return {
@@ -12,7 +12,7 @@ module.exports = async function(req) {
         }
 
         const token = req.headers.authorization.split(' ')[1];
-        const payload = jwt.verify(token, secret);
+        const payload = verify(token, secret);
         const user = await User.findOne({_id: payload.id});
 
         if (!user.isAdmin) {

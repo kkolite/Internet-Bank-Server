@@ -4,14 +4,17 @@
 // Обновление данных - логин (+токен в хедере)
 // Удаление - логин, пароль (+токен в хедере)
 
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const {secret} = require('../config');
-const createUser = require('./utils/createUser');
-const createCode = require('./utils/createCode');
-const confirmCode = require('./utils/confirmCode');
-const resetPassword = require('./utils/resetPassword');
+import User from '../models/user.js';
+import pkg from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { secret } from '../config.js';
+import createUser from './utils/createUser.js';
+import createCode from './utils/createCode.js';
+import confirmCode from './utils/confirmCode.js';
+import resetPassword from './utils/resetPassword.js';
+
+const { sign, verify: _verify } = jwt;
+const { compareSync, hashSync } = pkg;
 
 class userController {
     async newUser(req, res) {
@@ -44,7 +47,7 @@ class userController {
                 });
             }
 
-            const isPasswordValid = bcrypt.compareSync(password, user.password)
+            const isPasswordValid = compareSync(password, user.password)
             if (!isPasswordValid) {
                 return res
                 .status(400)
@@ -96,7 +99,7 @@ class userController {
                 .json(result)
             }
 
-            const token = jwt.sign({id: user._id}, secret);
+            const token = sign({id: user._id}, secret);
             return res
             .status(200)
             .json({
@@ -130,8 +133,9 @@ class userController {
             }
 
             const token = req.headers.authorization.split(' ')[1];
-            const payload = jwt.verify(token, secret);
+            const payload = _verify(token, secret);
             const user = await User.findOne({_id: payload.id});
+            //const check = await userCheck(req);
 
             return res
             .status(200)
@@ -167,9 +171,9 @@ class userController {
             }
 
             const token = req.headers.authorization.split(' ')[1];
-            const payload = jwt.verify(token, secret);
+            const payload = _verify(token, secret);
             const user = await User.findOne({_id: payload.id});
-            const isPasswordValid = bcrypt.compareSync(password, user.password)
+            const isPasswordValid = compareSync(password, user.password)
             if(isPasswordValid) {
                 await User.deleteOne({_id: payload.id});
                 console.log(`User ${payload.id} deleted`)
@@ -208,9 +212,9 @@ class userController {
                 })
             }
 
-            const cryptoPassword = bcrypt.hashSync(password, 6);
+            const cryptoPassword = hashSync(password, 6);
             const token = req.headers.authorization.split(' ')[1];
-            const payload = jwt.verify(token, secret);
+            const payload = _verify(token, secret);
             await User.updateOne({_id: payload.id}, {
                 username,
                 email,
@@ -268,4 +272,4 @@ class userController {
     }
 }
 
-module.exports = new userController();
+export default new userController();

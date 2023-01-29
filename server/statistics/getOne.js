@@ -1,6 +1,6 @@
-const Statistics = require('../models/statistics');
+import Statistics from '../models/statistics.js';
 
-module.exports = async function(operationID) {
+export default async function(operationID) {
     const operation = await Statistics.findOne({operationID});
     if (!operation) {
         return {

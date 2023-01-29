@@ -1,7 +1,8 @@
-const nodemailer = require('nodemailer');
+import ndm from 'nodemailer';
+const { createTransport } = ndm;
 
-module.exports = async function(toEmail, text) {
-    let transporter = nodemailer.createTransport({
+export default async function(toEmail, text) {
+    let transporter = createTransport({
         service: 'gmail',
         auth: {
           user: 'rsbank.verify@gmail.com',

@@ -1,11 +1,11 @@
-const User = require('../models/user');
-const Bank = require('../models/bank');
-const config = require('../config');
-const adminCheck = require('./utils/adminCheck');
-const createNew = require('../user/utils/createUser');
-const clearDatabase = require('./utils/clearDatabase');
-const getAll = require('../statistics/getAll');
-const getOne = require('../statistics/getOne');
+import User from '../models/user.js';
+import Bank from '../models/bank.js';
+import { bankKey } from '../config.js';
+import adminCheck from './utils/adminCheck.js';
+import createNew from '../user/utils/createUser.js';
+import clearDatabase from './utils/clearDatabase.js';
+import getAll from '../statistics/getAll.js';
+import getOne from '../statistics/getOne.js';
 
 class adminController{
     async check(req,res) {
@@ -33,7 +33,7 @@ class adminController{
                 .status(400)
                 .json(result)
             }
-            const bankname = req.query.bankname || config.bankKey;
+            const bankname = req.query.bankname || bankKey;
             const bank = await Bank.findOne({bankname});
             return res
             .status(200)
@@ -85,7 +85,7 @@ class adminController{
                 .status(400)
                 .json(result)
             }
-            const {username} = req.query.bankname;
+            const {username} = req.query;
             if (!username) {
                 return res
                 .status(400)
@@ -95,7 +95,7 @@ class adminController{
                 })
             }
 
-            const user = await User.findOne(username);
+            const user = await User.findOne({username});
             if(!user) {
                 return res
                 .status(400)
@@ -210,7 +210,7 @@ class adminController{
                 })
             }
 
-            const user = await findOne({username});
+            const user = await User.findOne({username});
             if(!user) {
                 return res
                 .status(404)
@@ -263,4 +263,4 @@ class adminController{
     }
 }
 
-module.exports = new adminController();
+export default new adminController();
