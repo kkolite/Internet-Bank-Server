@@ -5,7 +5,7 @@
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDUxNGZkMmY4MzMyODExZGRjZjEyNiIsImlhdCI6MTY3NDkyOTI0N30.1VUkbUkSl-UoAsNIMKlNoJdqUzS6xL-ryMQS6-snCuo
 
 const User = require('../../models/user');
-const nodemailer = require('nodemailer');
+const sendEmail = require('./sendEmail');
 
 function randomKey() {
     const one = Math.floor(Math.random() * 10);
@@ -29,25 +29,7 @@ module.exports = async function(username) {
         verifyCode
     });
 
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'rsbank.verify@gmail.com',
-          pass: 'qftlbygmvdthtopj',
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    })
-
-    await transporter.sendMail({
-        from: '"RSBank Verify" <rsbank.verify@gmail.com>',
-        to: `${user.email}`,
-        subject: 'Secury code',
-        text: `Your code - ${verifyCode}`,
-    })
-    return {
-        success: true,
-        message: 'Success'
-    }
+    const text = `You code - ${verifyCode}`;
+    const sendStatus = await sendEmail(user.email, text);
+    return sendStatus;
 }

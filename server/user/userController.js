@@ -11,6 +11,7 @@ const {secret} = require('../config');
 const createUser = require('./utils/createUser');
 const createCode = require('./utils/createCode');
 const confirmCode = require('./utils/confirmCode');
+const resetPassword = require('./utils/resetPassword');
 
 class userController {
     async newUser(req, res) {
@@ -249,6 +250,21 @@ class userController {
             message: `Success!`,
             success: true,
         });
+    }
+
+    async reset(req, res) {
+        try {
+            const result = await resetPassword(req);
+            return res
+            .status(result.success ? 200 : 400)
+            .json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
     }
 }
 

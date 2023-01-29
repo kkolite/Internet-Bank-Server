@@ -4,6 +4,7 @@
   - [Registration](#registration)
   - [Login](#login)
   - [Verify](#verify)
+  - [Password reset](#password-reset)
   - [Check user in DB](#check-user-in-db)
   - [User](#user)
     - [GET](#get)
@@ -12,7 +13,7 @@
 - [Сценарий Денег](#сценарий-денег)
     - [Add or remove money](#add-or-remove-money)
     - [Transfer between clients](#transfer-between-clients)
-    - [Перевод с/на/между карточками](#перевод-снамежду-карточками)
+    - [Currency exchange](#currency-exchange)
     - [Commission](#commission)
 - [Сценарий Админа](#сценарий-админа)
     - [Check](#check)
@@ -95,6 +96,25 @@
 - error bodies:
     - `success: false`,
     - `message`:`${username} not found` or `Invalid req body` or `Error!` or `User not found during check secure code` or `Invalid code`
+
+### Password reset
+
+Сброс пароля (если пользователь забыл его). Необходимо передать ник и почту (для проверки, что Вася это Вася). Отправляет на почту новый пароль.
+
+- Method: POST
+- URL: user/reset
+
+- req body:
+    - `username: string`,
+    - `email: string`
+
+- res body: 
+    - `message: Success!`,
+    - `success: true`,
+
+- error bodies:
+    - `success: false`,
+    - `message`:`Invalid req body` or `Incorrect username or/and email` or `Error!`
 
 ### Check user in DB
 
@@ -427,5 +447,3 @@ In progess
 
 - Кредиты (money)
 - Депозиты (money)
-- Создание чека операции (money)
-- Ресет пароля
