@@ -27,4 +27,8 @@ export default {
         name: '',
         ruName: 'Анонимная операция (с нее получена комиссия)',
     },
+    8: {
+        name: 'Transfer between clients',
+        ruName: 'Перевод денег между клиентами',
+    }
 }

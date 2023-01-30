@@ -7,7 +7,7 @@ import updateLastFive from '../../statistics/updateLastFive.js';
 const { verify } = jwt;
 
 export default async function(req) {
-    const {toUsername, money, operationID} = req.body;
+    const {toUsername, money} = req.body;
     const token = req.headers.authorization.split(' ')[1];
     const payload = verify(token, secret);
     const userOne = await User.findOne({_id: payload.id});
@@ -37,8 +37,8 @@ export default async function(req) {
         money: moneyTwo
     });
 
-    await update(operationID, money);
-    await updateLastFive(userOne.username, operationID, money);
+    await update(8, money);
+    await updateLastFive(userOne.username, 8, money);
 
 
     return {

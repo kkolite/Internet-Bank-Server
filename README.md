@@ -218,7 +218,6 @@ In progess
 - req body: 
     - `money: number`
     - `toUsername: string`
-    - `operationID: number`
 
 - res body:
     - `success: true`
