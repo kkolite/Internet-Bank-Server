@@ -205,20 +205,14 @@ class userController {
                 })
             }
 
-            if (!username | !email | !password) {
-                return res.status(400).json({
-                    message: 'Error! Incorrect req body',
-                    success: false,
-                })
-            }
-
             const cryptoPassword = hashSync(password, 6);
             const token = req.headers.authorization.split(' ')[1];
             const payload = _verify(token, secret);
+            const user = await User.findOne({_id: payload.id});
             await User.updateOne({_id: payload.id}, {
-                username,
-                email,
-                password: cryptoPassword,
+                username: username || user.username,
+                email: email || user.email,
+                password: password ? cryptoPassword : user.password,
             });
 
             return res
