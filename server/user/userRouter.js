@@ -10,5 +10,6 @@ router.get('/check', userController.isUser);
 router.get('/', userController.getInfo);
 router.put('/', userController.updateUser);
 router.delete('/', userController.deleteUser);
+router.get('/services', userController.services);
 
 export default router;

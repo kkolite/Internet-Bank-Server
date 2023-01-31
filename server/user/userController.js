@@ -12,6 +12,7 @@ import createUser from './utils/createUser.js';
 import createCode from './utils/createCode.js';
 import confirmCode from './utils/confirmCode.js';
 import resetPassword from './utils/resetPassword.js';
+import operations from '../data/operations.js';
 
 const { sign, verify: _verify } = jwt;
 const { compareSync, hashSync } = pkg;
@@ -256,6 +257,24 @@ class userController {
             return res
             .status(result.success ? 200 : 400)
             .json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async services(req, res) {
+        try {
+            return res
+            .status(200)
+            .json({
+                success: true,
+                message: 'Success',
+                operations
+            })
         } catch (error) {
             console.log(error);
             res.status(400).json({

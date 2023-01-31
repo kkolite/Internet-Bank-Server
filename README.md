@@ -6,6 +6,7 @@
   - [Verify](#verify)
   - [Password reset](#password-reset)
   - [Check user in DB](#check-user-in-db)
+  - [Get Services](#get-services)
   - [User](#user)
     - [GET](#get)
     - [PUT](#put)
@@ -129,6 +130,22 @@
 
 - res body: `success`: `true` or `false`
 
+### Get Services
+
+Получение операций.
+
+- Method: GET
+- URL: user/services
+
+- res body: 
+    - `message: Success!`,
+    - `success: true`,
+    - `operations`: `{operaionID:{name, ruName, category, ?logo}}`
+
+- error bodies:
+    - `success: false`,
+    - `message`: `Error!`
+
 ### User
 
 #### GET
@@ -195,7 +212,7 @@
 
 ## Сценарий Денег
 
-#### Add or remove money
+### Add or remove money
 
 Простое управление деньгами на счету клиента. Можно либо списать их со счета, либо наоборот добавить денег пользователю. Нужная сумма операции и ее ID передаются в теле, ее тип (зачисление либо снятие) - в параметрах.. Авторизация проиходит по токену в хедере.
 
@@ -219,7 +236,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! Incorrect query string or money` or `No enough money!` or `Error!`
 
-#### Transfer between clients
+### Transfer between clients
 
 Перевод денег между клиентами. Отправитель должен быть авторизирован, получатель определяется по нику.
 
@@ -239,7 +256,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `User not found!` or `No enough money!` or `Error!`
 
-#### New currency account
+### New currency account
 
 Создает новый валютный счет. Если такая валюта уже есть у пользователя - возвращается ошибка.
 
@@ -259,7 +276,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Not found user` or `You already have ${currency} account` or `Invalid req body` or `Error!`
 
-#### Delete currency account
+### Delete currency account
 
 Удаляет валютный счет.
 
@@ -279,7 +296,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Not found user` or `You already have ${currency} account` or `Invalid req body` or `Error!`
 
-#### Add money to currency account
+### Add money to currency account
 
 Пополнение или снятие с валютного счета.
 
@@ -301,7 +318,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Not found user` or `Not enough money` or `Invalid req body` or `Error!
 
-#### Currency exchange
+### Currency exchange
 
 Обмен валюты. Возможно два сценария - в рамках счетов одного клиента или анонимно (между карточками). Во втором варианте есть комиссия. При первом необходимо передать токен, параметры, а также дополнительное свойтсво в теле запроса (вторая валюта).
 
@@ -323,7 +340,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `User not found!` or `No enough money!` or `Invalid req body` or `Error!`
 
-#### Commission
+### Commission
 
 Для операций без участия счета клиента (оплата товаров карточкой, перевод между картчоками итд). Это не пустышка: комиссия идет на счет самого банка.
 
@@ -356,7 +373,7 @@
 - Количество собственных денег у банка
 - Статистика по выполненным операциям
 
-#### Check
+### Check
 
 Проверка по токену, является ли пользователь админом
 
@@ -373,7 +390,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
 
-#### Get bank info
+### Get bank info
 
 Получение ифнормации о счете банка. Их может быть несколько, есть опция передать название нужного счета. По умолчанию - счет из конфига сервера.
 
@@ -394,7 +411,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
 
-#### Get user database
+### Get user database
 
 Получение базы данных всех пользователей. Возвращает только "безопасные" данные. Никаких паролей и айдишников.
 
@@ -416,7 +433,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error!`
 
-#### Get user info
+### Get user info
 
 Получает информацию о конкретном пользователе по его нику.
 
@@ -440,7 +457,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in header` or `Not found user '${username}' in base` or `Error!`
 
-#### Create new user
+### Create new user
 
 Создает нового юзера.
 
@@ -460,7 +477,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `We already have user with same username/email` or `Ooops! Empty field!` or `Error!`
 
-#### Block user
+### Block user
 
 Админ не может изменить пароль, ник или емали пользователя. Но он может его заблокировать.
 
@@ -479,7 +496,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Error! Incorrect req body` or `Not found user '${username}' in base` or `Error!`
 
-#### Delete user
+### Delete user
 
 Удаление пользователя из базы
 
@@ -497,7 +514,7 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `No username in body` or `Not found user '${username}' in base` or `Error!`
 
-#### Get operation's statistics
+### Get operation's statistics
 
 Возвращает статистику по операциям: сколько раз выполнялись, сколько денег прошло. При передаче в параметрах айдишника операции вернет данные по конкретной операции.
 
