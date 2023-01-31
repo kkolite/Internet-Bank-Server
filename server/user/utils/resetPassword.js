@@ -3,11 +3,8 @@ import sendEmail from "./sendEmail.js";
 import bcrypt from "bcryptjs";
 
 function randomPassword() {
-    const one = Math.floor(Math.random() * 100);
-    const two = Math.floor(Math.random() * 99);
-    const three = Math.floor(Math.random() * 87);
-    const four = Math.floor(Math.random() * 17);
-    return `${one}${two}${three}${four}`;
+    const one = Math.floor(Math.random() * 100000000);
+    return `${10000000 + one}`;
 }
 
 export default async function(req) {
