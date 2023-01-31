@@ -9,15 +9,15 @@ export default async function(username, code) {
         }
     }
 
-    if(user.verifyCode !== code) {
+    if(user.verifyCode == code || user.pinCode == code) {
         return {
-            success: false,
-            message: 'Invalid code'
+            success: true,
+            message: 'Success'
         }
     }
 
     return {
-        success: true,
-        message: 'Success'
+        success: false,
+        message: 'Invalid code'
     }
 }

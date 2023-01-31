@@ -8,6 +8,7 @@ const User = new Schema({
     isAdmin: {type: Boolean, default: false},
     isBlock: {type: Boolean, default: false},
     verifyCode: {type: Number, default: 0},
+    pinCode: {type: Number},
     money: {type: Number, default: 100},
     lastFive: [{operationID: Number, date: Date, money: Number}],
     accounts: [{currency: String, money: Number}]

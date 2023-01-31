@@ -7,7 +7,7 @@
 import User from '../../models/user.js';
 import sendEmail from './sendEmail.js';
 
-function randomKey() {
+export function randomKey() {
     const one = Math.floor(Math.random() * 10);
     const two = Math.floor(Math.random() * 10);
     const three = Math.floor(Math.random() * 10);

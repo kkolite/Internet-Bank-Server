@@ -1,5 +1,6 @@
 import User from '../../models/user.js';
 import pkg from 'bcryptjs';
+import { randomKey } from './createCode.js';
 
 export default async function createUser(req) {
     const { hashSync } = pkg;
@@ -21,10 +22,13 @@ export default async function createUser(req) {
     }
 
     const cryptoPassword = hashSync(password, 6);
+    const pinCode = randomKey();
     const userConfig = {
         username,
         password: cryptoPassword,
         email,
+        pinCode,
+
     }
     const user = new User(userConfig);
     await user.save();
@@ -32,5 +36,6 @@ export default async function createUser(req) {
     return {
         message: 'New user create!',
         success: true,
+        pinCode
     };
 }
