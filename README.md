@@ -227,6 +227,7 @@
 - req query: `operation`: `add` or `remove`
 - req body: 
     - `money: number`
+    - `operationID: number`
 
 - res body:
     - `success: true`

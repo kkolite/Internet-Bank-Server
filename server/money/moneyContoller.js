@@ -13,16 +13,7 @@ import removeMoney from './utils/bankAccounts/removeMoney.js';
 class moneyController {
     async change(req, res) {
         try {
-            const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
-
             const result = await changeMoney(req);
-
             return res
             .status(result.success ? 200 : 400)
             .json(result);

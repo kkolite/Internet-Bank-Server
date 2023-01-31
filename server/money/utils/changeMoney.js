@@ -7,8 +7,15 @@ import updateLastFive from '../../statistics/updateLastFive.js';
 const { verify } = jwb;
 
 export default async function(req) {
-    const {money} = req.body;
+    const {money, operationID} = req.body;
     const {operation} = req.query;
+    const header = req.headers.authorization;
+        if (!header) {
+            return res.status(403).json({
+                message: 'Error! No token. Need to login',
+                success: false,
+            })
+        }
 
     if(operation !== 'add' && operation !== 'remove' || !money) {
         return {
@@ -17,7 +24,7 @@ export default async function(req) {
         }
     }
 
-    const token = req.headers.authorization.split(' ')[1];
+    const token = header.split(' ')[1];
     const payload = verify(token, secret);
     const user = await User.findOne({_id: payload.id});
 
@@ -41,7 +48,6 @@ export default async function(req) {
         money: newMoney
     });
 
-    const operationID = operation === 'add' ? 5 : 6;
     await update(operationID, money);
     await updateLastFive(user.username, operationID, money);
     return {
