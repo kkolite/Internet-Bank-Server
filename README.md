@@ -525,8 +525,6 @@
 - Method: GET
 - URL: admin/statistics
 
-- req query?: `operationID: number`
-
 - res body: 
     - `success: true`
     - `message: Success`
