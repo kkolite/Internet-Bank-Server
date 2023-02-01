@@ -241,12 +241,12 @@ class adminController{
 
     async getStatistics(req,res) {
         try {
-            const check = await adminCheck(req);
+            /*const check = await adminCheck(req);
             if (!check.success) {
                     return res
                     .status(400)
                     .json(check)
-                }
+                }*/
 
             const {operationID} = req.query;
             const result = operationID ? await getOne(operationID) : await getAll();
