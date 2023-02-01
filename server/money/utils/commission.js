@@ -11,5 +11,3 @@ export default async function commission(money, percent) {
     })
     await update(7, money);
 }
-
-//module.exports = commission();

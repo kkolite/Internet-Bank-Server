@@ -14,4 +14,4 @@ const User = new Schema({
     accounts: [{currency: String, money: Number}]
 })
 
-export default model('User', User)
+export default model('User', User);
