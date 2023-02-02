@@ -27,6 +27,9 @@
     - [Block user](#block-user)
     - [Delete user](#delete-user)
     - [Get operation's statistics](#get-operations-statistics)
+- [Викторина](#викторина)
+    - [Get quiz](#get-quiz)
+    - [Check Answers](#check-answers)
 - [В разработке](#в-разработке)
 
 ## Сценарий Пользователя 
@@ -537,7 +540,50 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Not found operation` or `Error! Empty/broken statistics` or `Error`
 
+## Викторина
+
+### Get quiz
+
+Получение вопросов викторины. Из данных на сервере рандомно выбирается пять вопросов, клиенту отправляется их айдишка, сами вопрос и варианты ответов на двух языках. Никаких ответов на клиенте.
+
+- Method: GET
+- URL: quiz/
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `questions[]`
+        - `id: number`
+        - `ruQuestion: string`
+        - `enQuestion: string`
+        - `ruAnswers: string[]`
+        - `enAnswers: string[]`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
+### Check answers
+
+Проверка ответов. Возвращает количество правильных ответов.
+
+- Method: POST
+- URL: quiz/
+
+- req body:
+    - `answers[]`
+        - `id: number`
+        - `answer: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `result: number`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
 ## В разработке
 
-- Кредиты (money)
-- Депозиты (money)
+- Чат-бот (Web Socket)

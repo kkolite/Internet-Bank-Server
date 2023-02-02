@@ -8,6 +8,7 @@ import bp from 'body-parser';
 import userRouter from './server/user/userRouter.js';
 import moneyRouter from './server/money/moneyRouter.js';
 import adminRouter from './server/admin/adminRouter.js';
+import quizRouter from './server/quiz/quizRouter.js';
 
 const { set, connect } = mng;
 const { json } = bp;
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/money', moneyRouter);
 app.use('/admin', adminRouter);
+app.use('/quiz', quizRouter);
 
 async function start() {
 	try {
