@@ -1,4 +1,4 @@
-import quiz from "../data/quiz";
+import quiz from "../data/quiz.js";
 
 export function checkAnswers(answers) {
   let correct = 0;

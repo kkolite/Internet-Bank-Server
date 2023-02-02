@@ -1,5 +1,5 @@
-import { checkAnswers } from "./checkAnswers";
-import { createQuizArr } from "./createQuizArr";
+import { checkAnswers } from "./checkAnswers.js";
+import { createQuizArr } from "./createQuizArr.js";
 
 class QuizController {
   getQustions(req, res) {
