@@ -199,10 +199,10 @@ class userController {
     async updateUser(req, res) {
         try {
             const header = req.headers.authorization;
-            const { username, email, password } = req.body;
-            if (!header) {
+            const { currentPassword, username, email, password } = req.body;
+            if (!header || !currentPassword) {
                 return res.status(403).json({
-                    message: 'Error! No token. Need to login',
+                    message: 'Error! No token or/and password. Need to login',
                     success: false,
                 })
             }
@@ -211,6 +211,14 @@ class userController {
             const token = req.headers.authorization.split(' ')[1];
             const payload = _verify(token, secret);
             const user = await User.findOne({_id: payload.id});
+
+            const isPasswordValid = compareSync(currentPassword, user.password);
+            if (!isPasswordValid) {
+                return res.status(403).json({
+                    message: 'Invalid password',
+                    success: false,
+                })
+            }
             await User.updateOne({_id: payload.id}, {
                 username: username || user.username,
                 email: email || user.email,

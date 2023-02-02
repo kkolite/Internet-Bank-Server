@@ -177,13 +177,14 @@
 
 #### PUT
 
-Обновление данных пользователя. Принимает ник, почту и пароль (опционально).
+Обновление данных пользователя. Принимает ник, почту и пароль (опционально). Необходимо подтверждение текущим паролем.
 
 - Method: PUT
 - URL: /user
 
 - req header: `Authorization: Bearer ${token}`
 - req body:
+    - `currentPassword: string`
     - ?`username: string`
     - ?`password: string`
     - ?`email: string`
@@ -194,7 +195,7 @@
 
 - error bodies:
     - `success: false`
-    - `message`: `Error! No token. Need to login` or `Error!`
+    - `message`: `Error! No token or/and password. Need to login` or `Invalid password` or `Error!`
 
 #### DELETE
 
