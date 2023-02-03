@@ -1,37 +1,37 @@
 export default {
     1: {
-        name: 'currency exchange (anonim)',
+        name: 'Currency exchange (anonim)',
         ruName: 'Обмен валюты (анонимно)',
         category: 'Bank'
     },
     2: {
-        name: 'currency exchange (client)',
+        name: 'Currency exchange (client)',
         ruName: 'Обмен валюты (клиент)',
         category: 'Bank'
     },
     3: {
-        name: '',
+        name: 'Refill currency account',
         ruName: 'Пополнение валютного счета',
         category: 'Bank'
     },
     4: {
-        name: '',
+        name: 'Money remove from currency account',
         ruName: 'Снятие денег с валютного счета',
         category: 'Bank'
     },
     5: {
-        name: '',
+        name: 'Refill',
         ruName: 'Пополнение основного счета',
         category: 'Bank'
     },
     6: {
-        name: '',
+        name: 'Money remove',
         ruName: 'Снятие денег со счета',
         category: 'Bank'
     },
     7: {
-        name: '',
-        ruName: 'Анонимная операция (с нее получена комиссия)',
+        name: 'Commission',
+        ruName: 'Комиссия',
         category: 'Bank'
     },
     8: {
