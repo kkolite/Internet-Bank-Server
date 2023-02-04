@@ -9,6 +9,7 @@ import userRouter from './server/user/userRouter.js';
 import moneyRouter from './server/money/moneyRouter.js';
 import adminRouter from './server/admin/adminRouter.js';
 import quizRouter from './server/quiz/quizRouter.js';
+import webSocket from './server/webSocket.js';
 
 const { set, connect } = mng;
 const { json } = bp;
@@ -30,6 +31,7 @@ async function start() {
 		app.listen(port, function () {
 			console.log(`Server listens ${port}`);
 		});
+		webSocket();
 	} catch (error) {
 		console.log(error);
 	}
