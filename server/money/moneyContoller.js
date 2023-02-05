@@ -1,5 +1,5 @@
 import commission from './utils/commission.js';
-import { commission as _commission, OPERATIONS_ACTION } from '../config.js';
+import { COMMISSION, OPERATIONS_ACTION } from '../config.js';
 import update from '../statistics/update.js';
 import changeMoney from './utils/changeMoney.js';
 import transferMoney from './utils/transferMoney.js';
@@ -53,7 +53,7 @@ class moneyController {
                     success: false,
                 })
             }
-            await commission(money, _commission);
+            await commission(money, COMMISSION);
             const moneyPay = money * ((100 - 2)/100);
 
             await update(operationID, money);
@@ -64,7 +64,7 @@ class moneyController {
                 success: true,
                 message: 'Success',
                 moneyPay,
-                commission: _commission
+                commission: COMMISSION
             })
         } catch (error) {
             console.log(error);

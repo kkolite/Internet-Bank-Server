@@ -1,7 +1,7 @@
-export const secret = 'my-secret-key';
+export const SECRET = 'my-SECRET-key';
 export const bankKey = 'Bank1';
-export const commission = 2;
-export const currencyCommission = 3;
+export const COMMISSION = 2;
+export const CURRENCY_COMMISSION = 3;
 export const USD = 'USD';
 export const OPERATION_HISTORY_LIMIT = 5;
 export const OPERATION_IDS = {

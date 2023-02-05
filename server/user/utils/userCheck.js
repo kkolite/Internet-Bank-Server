@@ -1,6 +1,6 @@
 import User from "../../models/user.js";
 import jwt from 'jsonwebtoken';
-import { secret } from '../../config.js';
+import { SECRET } from '../../config.js';
 
 const { verify } = jwt;
 
@@ -16,7 +16,7 @@ export default async function(req, res, next) {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const payload = verify(token, secret);
+    const payload = verify(token, SECRET);
     const user = await User.findOne({_id: payload.id});
     if (!user) {
         return res

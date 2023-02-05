@@ -1,4 +1,4 @@
-import { currencyCommission, USD } from "../../config.js";
+import { CURRENCY_COMMISSION, USD } from "../../config.js";
 import update from "../../statistics/update.js";
 import exchangeRate from "./bankAccounts/exchangeRate.js";
 import commission from "./commission.js";
@@ -12,7 +12,7 @@ export default async function(req) {
         }
     }
     let bankCurrency = money;
-    const percent = currencyCommission;
+    const percent = CURRENCY_COMMISSION;
     if (currencyOne !== USD) {
         const data = await exchangeRate(currencyOne, USD, money);
         bankCurrency = data.new_amount;

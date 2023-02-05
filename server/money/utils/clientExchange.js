@@ -3,7 +3,7 @@ import changeMoney from "./bankAccounts/changeMoney.js";
 import User from "../../models/user.js";
 import exchangeRate from "./bankAccounts/exchangeRate.js";
 import jwt from 'jsonwebtoken';
-import { OPERATIONS_ACTION, secret, USD } from '../../config.js';
+import { OPERATIONS_ACTION, SECRET, USD } from '../../config.js';
 
 const { verify } = jwt;
 
@@ -17,7 +17,7 @@ export default async function(req) {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const payload = verify(token, secret);
+    const payload = verify(token, SECRET);
     const user = await User.findOne({_id: payload.id});
     const username = user.username;
 

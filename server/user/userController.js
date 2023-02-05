@@ -7,7 +7,7 @@
 import User from '../models/user.js';
 import pkg from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { secret } from '../config.js';
+import { SECRET } from '../config.js';
 import createUser from './utils/createUser.js';
 import createCode from './utils/createCode.js';
 import confirmCode from './utils/confirmCode.js';
@@ -101,7 +101,7 @@ class userController {
                 .json(result)
             }
 
-            const token = sign({id: user._id}, secret);
+            const token = sign({id: user._id}, SECRET);
             return res
             .status(200)
             .json({
