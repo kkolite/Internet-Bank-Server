@@ -4,9 +4,9 @@ import update from '../../statistics/update.js';
 
 export default async function commission(money, percent) {
     const commPayment = money * (percent / 100);
-    const bank = await Bank.findOne({bankname: bankKey});
+    const bank = await Bank.findOne({name: bankKey});
     const newMoney = bank.money + commPayment;
-    await Bank.updateOne({bankname: bankKey}, {
+    await Bank.updateOne({name: bankKey}, {
         money: newMoney
     })
     await update(7, money);

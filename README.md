@@ -41,7 +41,7 @@
 Регистрация пользователя в нашей базе. Необходимо передать ник, почту и пароль. **Валидация должна быть на фронтенде**. Вовзращает состояние выполненной операции (успех или неудача), многоразовый пин-код (если успех) и сообщение (успех или причина ошибки).
 
 - Method: POST
-- URL: user/registration
+- URL: action/registration
 
 - req body:
     - `username: string`,
@@ -63,7 +63,7 @@
 Авторизация клиента. Передается ник и пароль.
 
 - Method: POST
-- URL: user/login
+- URL: action/login
 
 - req body:
     - `username: string`,
@@ -82,7 +82,7 @@
 Проверка кода, который пришел на почту (или многоразового пин-кода). В ответ может вернуться ошибка с сообщением о причине ошибки. Успешное выполнение помимо статуса выполнения операции возвращает токен и информацию о пользователе (ник, количество денег, является ли пользователь админом, находится ли пользователь в блокировке).
 
 - Method: POST
-- URL: user/verify
+- URL: action/verify
 
 - req body:
     - `username: string`,
@@ -111,7 +111,7 @@
 Сброс пароля (если пользователь забыл его). Необходимо передать ник и почту (для проверки, что Вася это Вася). Отправляет на почту новый пароль.
 
 - Method: POST
-- URL: user/reset
+- URL: action/reset
 
 - req body:
     - `username: string`,
@@ -130,7 +130,7 @@
 Поиск клиента в нашей базе по его нику. Возвращает `true` или `false` без никакой другой информации о пользователе.
 
 - Method: GET
-- URL: user/check
+- URL: action/check
 
 - req query: `username`
 
@@ -141,7 +141,7 @@
 Получение операций.
 
 - Method: GET
-- URL: user/services
+- URL: action/services
 
 - res body: 
     - `message: Success!`,
@@ -228,7 +228,7 @@
 Планируется добавить дополнительную верификацию (клиенту на почту придет пинкод).
 
 - Method: POST
-- URL: /money
+- URL: /securemoney
 
 - req header: `Authorization: Bearer ${token}`
 - req query: `operation`: `add` or `remove`
@@ -249,7 +249,7 @@
 Перевод денег между клиентами. Отправитель должен быть авторизирован, получатель определяется по нику.
 
 - Method: POST
-- URL: /money/transfer
+- URL: /securemoney/transfer
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -269,7 +269,7 @@
 Создает новый валютный счет. Если такая валюта уже есть у пользователя - возвращается ошибка.
 
 - Method: POST
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -289,7 +289,7 @@
 Удаляет валютный счет.
 
 - Method: DELETE
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -309,7 +309,7 @@
 Пополнение или снятие с валютного счета.
 
 - Method: PUT
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req query: `operation` = `add` or `remove`
@@ -567,7 +567,7 @@
 **Update**. Отключил проверку на админа, планируем выводить эту статистику в общий доступ.
 
 - Method: GET
-- URL: admin/statistics
+- URL: statistics/
 
 - res body: 
     - `success: true`

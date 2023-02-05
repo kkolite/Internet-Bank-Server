@@ -1,5 +1,5 @@
+import { OPERATIONS_ACTION } from '../../../config.js';
 import User from '../../../models/user.js';
-import checkMoney from './checkMoney.js';
 import findAccount from './findAccount.js';
 
 export default async function(username, money, currency, operation) {
@@ -12,10 +12,10 @@ export default async function(username, money, currency, operation) {
     }
 
     let newMoney;
-    if (operation === 'add') {
+    if (operation === OPERATIONS_ACTION.ADD) {
         newMoney = result.account.money + money;
     }
-    if (operation === 'remove') {
+    if (operation === OPERATIONS_ACTION.REMOVE) {
         const isEnough = result.account.money >= money;
         console.log(isEnough)
         if (!isEnough) {

@@ -4,17 +4,16 @@ import { bankKey } from '../config.js';
 import adminCheck from './utils/adminCheck.js';
 import createNew from '../user/utils/createUser.js';
 import clearDatabase from './utils/clearDatabase.js';
-import getAll from '../statistics/getAll.js';
-import getOne from '../statistics/getOne.js';
 
 class adminController{
     async check(req,res) {
         try {
-            const result = await adminCheck(req);
-            const status = result.success ? 200 : 400;
             return res
-            .status(status)
-            .json(result)
+            .status(200)
+            .json({
+                message: 'Success',
+                success: true,
+            })
         } catch (error) {
             console.log(error);
             res.status(400).json({
@@ -27,14 +26,14 @@ class adminController{
 
     async getBank(req,res) {
         try {
-            const result = await adminCheck(req);
+            /*const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
             const bankname = req.query.bankname || bankKey;
-            const bank = await Bank.findOne({bankname});
+            const bank = await Bank.findOne({name: bankname});
             return res
             .status(200)
             .json({
@@ -53,12 +52,12 @@ class adminController{
 
     async getDatabase(req,res) {
         try {
-            const result = await adminCheck(req);
+            /*const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
             const database = await User.find();
             const safeDatabase = clearDatabase(database);
             return res
@@ -79,12 +78,12 @@ class adminController{
 
     async getUser(req,res) {
         try {
-            const result = await adminCheck(req);
+            /*const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
             const {username} = req.query;
             if (!username) {
                 return res
@@ -128,12 +127,12 @@ class adminController{
 
     async createUser(req,res) {
         try {
-            const result = await adminCheck(req);
+            /*const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
 
             const answer = await createNew(req);
             return res
@@ -150,12 +149,12 @@ class adminController{
 
     async deleteUser(req,res) {
         try {
-            const result = await adminCheck(req);
+           /* const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
 
             const {username} = req.body;
             if (!username) {
@@ -195,12 +194,12 @@ class adminController{
 
     async blockUser(req,res) {
         try {
-            const result = await adminCheck(req);
+            /*const result = await adminCheck(req);
             if (!result.success) {
                 return res
                 .status(400)
                 .json(result)
-            }
+            }*/
 
             const { username, isBlock } = req.body;
             if (!isBlock) {
@@ -230,29 +229,6 @@ class adminController{
                 message: 'Success!',
                 success: true,
             });
-        } catch (error) {
-            console.log(error);
-            res.status(400).json({
-                message: 'Error!',
-                success: false,
-            });
-        }
-    }
-
-    async getStatistics(req,res) {
-        try {
-            /*const check = await adminCheck(req);
-            if (!check.success) {
-                    return res
-                    .status(400)
-                    .json(check)
-                }*/
-
-            const {operationID} = req.query;
-            const result = operationID ? await getOne(operationID) : await getAll();
-            return res
-            .status(result.success ? 200 : 404)
-            .json(result);
         } catch (error) {
             console.log(error);
             res.status(400).json({

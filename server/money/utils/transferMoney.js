@@ -1,16 +1,11 @@
 import User from '../../models/user.js';
-import jwt from 'jsonwebtoken';
-import { secret } from '../../config.js';
 import update from '../../statistics/update.js';
 import updateLastFive from '../../statistics/updateLastFive.js';
 
-const { verify } = jwt;
-
 export default async function(req) {
     const {toUsername, money} = req.body;
-    const token = req.headers.authorization.split(' ')[1];
-    const payload = verify(token, secret);
-    const userOne = await User.findOne({_id: payload.id});
+    const {user} = req;
+    const userOne = await User.findOne({username: user.username});
 
     if(money > userOne.money) {
         return {
@@ -30,7 +25,7 @@ export default async function(req) {
     const moneyOne = userOne.money - money;
     const moneyTwo = userTwo.money + money;
 
-    await User.updateOne({_id: payload.id}, {
+    await User.updateOne({username: user.username}, {
         money: moneyOne
     });
     await User.updateOne({username: toUsername}, {

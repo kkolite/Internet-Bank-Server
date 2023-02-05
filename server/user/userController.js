@@ -126,7 +126,7 @@ class userController {
 
     async getInfo(req, res) {
         try {
-            const header = req.headers.authorization;
+            /*const header = req.headers.authorization;
             if (!header) {
                 return res.status(403).json({
                     message: 'Error! No token. Need to login',
@@ -134,11 +134,12 @@ class userController {
                 })
             }
 
-            const token = req.headers.authorization.split(' ')[1];
+            /*const token = req.headers.authorization.split(' ')[1];
             const payload = _verify(token, secret);
             const user = await User.findOne({_id: payload.id});
-            //const check = await userCheck(req);
+            //const check = await userCheck(req);*/
 
+            const {user} = req;
             return res
             .status(200)
             .json({
@@ -163,28 +164,36 @@ class userController {
 
     async deleteUser(req, res) {
         try {
-            const header = req.headers.authorization;
+            //const header = req.headers.authorization;
+            /*if (!header || !password) {
+                return res.status(403).json({
+                    message: 'Error! No token or/and password. Need to login',
+                    success: false,
+                })
+            }
+            
+            const token = req.headers.authorization.split(' ')[1];
+            const payload = _verify(token, secret);
+            const user = await User.findOne({_id: payload.id});*/
+            const {user} = req;
             const { password } = req.body;
-            if (!header || !password) {
+
+            if (!password) {
                 return res.status(403).json({
                     message: 'Error! No token or/and password. Need to login',
                     success: false,
                 })
             }
 
-            const token = req.headers.authorization.split(' ')[1];
-            const payload = _verify(token, secret);
-            const user = await User.findOne({_id: payload.id});
             const isPasswordValid = compareSync(password, user.password)
             if(isPasswordValid) {
-                await User.deleteOne({_id: payload.id});
-                console.log(`User ${payload.id} deleted`)
+                await User.deleteOne({user: user.username});
             }
 
             return res
             .status(200)
             .json({
-                message: `User ${payload.id} deleted`,
+                message: `User deleted`,
                 success: true,
             });
         } catch (error) {
@@ -198,19 +207,20 @@ class userController {
 
     async updateUser(req, res) {
         try {
-            const header = req.headers.authorization;
-            const { currentPassword, username, email, password } = req.body;
-            if (!header || !currentPassword) {
+            //const header = req.headers.authorization;
+            /*if (!header || !currentPassword) {
                 return res.status(403).json({
                     message: 'Error! No token or/and password. Need to login',
                     success: false,
                 })
-            }
+            }*/
 
-            const cryptoPassword = hashSync(password, 6);
-            const token = req.headers.authorization.split(' ')[1];
+            /*const token = req.headers.authorization.split(' ')[1];
             const payload = _verify(token, secret);
-            const user = await User.findOne({_id: payload.id});
+            const user = await User.findOne({_id: payload.id});*/
+            const {user} = req;
+            const { currentPassword, username, email, password } = req.body;
+            const cryptoPassword = hashSync(password, 6);
 
             const isPasswordValid = compareSync(currentPassword, user.password);
             if (!isPasswordValid) {
@@ -219,7 +229,7 @@ class userController {
                     success: false,
                 })
             }
-            await User.updateOne({_id: payload.id}, {
+            await User.updateOne({username: user.username}, {
                 username: username || user.username,
                 email: email || user.email,
                 password: password ? cryptoPassword : user.password,

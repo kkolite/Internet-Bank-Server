@@ -10,6 +10,11 @@ import moneyRouter from './server/money/moneyRouter.js';
 import adminRouter from './server/admin/adminRouter.js';
 import quizRouter from './server/quiz/quizRouter.js';
 import webSocket from './server/webSocket.js';
+import statRouter from './server/statistics/statRouter.js';
+import adminCheck from './server/admin/utils/adminCheck.js';
+import actionRouter from './server/user/actionRouter.js';
+import userCheck from './server/user/utils/userCheck.js';
+import moneySecureRouter from './server/money/moneySecureRouter.js';
 
 const { set, connect } = mng;
 const { json } = bp;
@@ -19,10 +24,13 @@ const MONGO_URL = `mongodb://qwerty:9Ij62MhBMOLIoZQ5@ac-ek4wj69-shard-00-00.jmt0
 
 app.use(json());
 app.use(cors());
-app.use('/user', userRouter);
+app.use('/action', actionRouter);
+app.use('/user', userCheck, userRouter);
+app.use('/securemoney', userCheck, moneySecureRouter);
 app.use('/money', moneyRouter);
-app.use('/admin', adminRouter);
+app.use('/admin', adminCheck, adminRouter);
 app.use('/quiz', quizRouter);
+app.use('/statistics', statRouter);
 
 async function start() {
 	try {

@@ -2,9 +2,6 @@ import User from '../../../models/user.js';
 import userCheck from '../../../user/utils/userCheck.js';
 
 export default async function(req) {
-    const check = await userCheck(req);
-    if (!check.success) return check;
-
     const {username, currency} = req.body;
     if(!username || !currency) {
         return {

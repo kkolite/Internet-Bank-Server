@@ -1,3 +1,4 @@
+import { OPERATIONS_ACTION, OPERATION_IDS, USD } from "../../../config.js";
 import User from "../../../models/user.js";
 import update from "../../../statistics/update.js";
 import updateLastFive from "../../../statistics/updateLastFive.js";
@@ -31,14 +32,14 @@ export default async function(req) {
 
     const newMainMoney = user.money - money;
 
-    const data = await exchangeRate('USD', currency, money);
+    const data = await exchangeRate(USD, currency, money);
     const newMoney = data.new_amount;
 
     await User.updateOne({username}, {
         money: newMainMoney
     })
-    const updateAccount = await changeMoney(username, newMoney, currency, 'add');
-    await updateLastFive(username, 3, money);
-    await update(3, money);
+    const updateAccount = await changeMoney(username, newMoney, currency, OPERATIONS_ACTION.ADD);
+    await updateLastFive(username, OPERATION_IDS.ADD_MONEY, money);
+    await update(OPERATION_IDS.ADD_MONEY, money);
     return updateAccount;
 }

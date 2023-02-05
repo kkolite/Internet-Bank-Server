@@ -9,6 +9,5 @@ router.get('/user', controller.getUser);
 router.post('/user', controller.createUser);
 router.put('/user', controller.blockUser);
 router.delete('/user', controller.deleteUser);
-router.get('/statistics', controller.getStatistics);
 
 export default router;

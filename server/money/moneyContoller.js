@@ -1,5 +1,5 @@
 import commission from './utils/commission.js';
-import { commission as _commission } from '../config.js';
+import { commission as _commission, OPERATIONS_ACTION } from '../config.js';
 import update from '../statistics/update.js';
 import changeMoney from './utils/changeMoney.js';
 import transferMoney from './utils/transferMoney.js';
@@ -30,14 +30,6 @@ class moneyController {
 
     async transfer(req, res) {
         try {
-            const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
-
             const result = await transferMoney(req);
 
             return res
@@ -137,13 +129,6 @@ class moneyController {
 
     async changeAccountMoney(req,res) {
         try {
-            const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
             const {operation} = req.query;
             if (!operation) {
                 return res
@@ -154,10 +139,10 @@ class moneyController {
                 })
             }
             let result;
-            if (operation === 'add') {
+            if (operation === OPERATIONS_ACTION.ADD) {
                 result = await addMoney(req);
             }
-            if (operation === 'remove') {
+            if (operation === OPERATIONS_ACTION.REMOVE) {
                 result = await removeMoney(req);
             }
             return res
