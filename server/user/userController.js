@@ -186,7 +186,7 @@ class userController {
         try {
             const {user} = req;
             const { currentPassword, username, email, password } = req.body;
-            const cryptoPassword = hashSync(password, 6);
+            const cryptoPassword = password ? hashSync(password, 6) : null;
 
             const isPasswordValid = compareSync(currentPassword, user.password);
             if (!isPasswordValid) {
