@@ -218,6 +218,24 @@
     - `success: false`
     - `message`: `Error! No token or/and password. Need to login` or `Error!`
 
+### Save card
+
+Сохранение ССЫЛКИ на созданную пользователем карточку в БД
+
+- Method: POST
+- URL: /user/card
+
+- req header: `Authorization: Bearer ${token}`
+- req body: `link: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error!`
+
 ## Сценарий Денег
 
 ### Add or remove money

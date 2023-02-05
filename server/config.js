@@ -1,4 +1,4 @@
-export const SECRET = 'my-SECRET-key';
+export const SECRET = 'my-secret-key';
 export const bankKey = 'Bank1';
 export const COMMISSION = 2;
 export const CURRENCY_COMMISSION = 3;

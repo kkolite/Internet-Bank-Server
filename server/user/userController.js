@@ -261,6 +261,25 @@ class userController {
                 operations
             })
         } catch (error) {
+            c
+        }
+    }
+
+    async saveCard(req,res) {
+        try {
+            const {user} = req;
+            const {link} = req.body;
+            const newCards = [...user.cards, link]
+            await User.updateOne({username: user.username}, {
+                cards: newCards
+            })
+            return res
+            .status(200)
+            .json({
+                success: true,
+                message: 'Success',
+            })
+        } catch (error) {
             console.log(error);
             res.status(400).json({
                 message: 'Error!',

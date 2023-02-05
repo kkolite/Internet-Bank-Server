@@ -11,7 +11,8 @@ const User = new Schema({
     pinCode: {type: Number},
     money: {type: Number, default: 100},
     lastFive: [{operationID: Number, date: Date, money: Number}],
-    accounts: [{currency: String, money: Number}]
+    accounts: [{currency: String, money: Number}],
+    cards: [String]
 })
 
 export default model('User', User);
