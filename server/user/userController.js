@@ -126,19 +126,6 @@ class userController {
 
     async getInfo(req, res) {
         try {
-            /*const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
-
-            /*const token = req.headers.authorization.split(' ')[1];
-            const payload = _verify(token, secret);
-            const user = await User.findOne({_id: payload.id});
-            //const check = await userCheck(req);*/
-
             const {user} = req;
             return res
             .status(200)
@@ -150,7 +137,8 @@ class userController {
                     money: user.money,
                     isAdmin: user.isAdmin,
                     isBlock: user.isBlock,
-                    lastFive: user.lastFive
+                    lastFive: user.lastFive,
+                    email: user.email
                 }
             });
         } catch (error) {
@@ -164,17 +152,6 @@ class userController {
 
     async deleteUser(req, res) {
         try {
-            //const header = req.headers.authorization;
-            /*if (!header || !password) {
-                return res.status(403).json({
-                    message: 'Error! No token or/and password. Need to login',
-                    success: false,
-                })
-            }
-            
-            const token = req.headers.authorization.split(' ')[1];
-            const payload = _verify(token, secret);
-            const user = await User.findOne({_id: payload.id});*/
             const {user} = req;
             const { password } = req.body;
 
@@ -207,17 +184,6 @@ class userController {
 
     async updateUser(req, res) {
         try {
-            //const header = req.headers.authorization;
-            /*if (!header || !currentPassword) {
-                return res.status(403).json({
-                    message: 'Error! No token or/and password. Need to login',
-                    success: false,
-                })
-            }*/
-
-            /*const token = req.headers.authorization.split(' ')[1];
-            const payload = _verify(token, secret);
-            const user = await User.findOne({_id: payload.id});*/
             const {user} = req;
             const { currentPassword, username, email, password } = req.body;
             const cryptoPassword = hashSync(password, 6);

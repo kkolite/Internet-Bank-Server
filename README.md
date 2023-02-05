@@ -169,6 +169,7 @@
     - `userConfig`:
         - `username: string`,
         - `money: number`,
+        - `email: string`,
         - `isAdmin: boolean`,
         - `isBlock: boolean`,
         - `lastFive`
