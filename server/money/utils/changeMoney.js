@@ -8,7 +8,7 @@ export default async function(req) {
     const {money, operationID} = req.body;
     const {operation} = req.query;
 
-    if(operation !== OPERATIONS_ACTION.ADD && operation !== OPERATIONS_ACTION.ADD || !money) {
+    if(operation !== OPERATIONS_ACTION.ADD && operation !== OPERATIONS_ACTION.REMOVE || !money) {
         return {
             message: 'Error! Incorrect query string or money',
             success: false,
