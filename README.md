@@ -367,6 +367,24 @@
     - `success: false`
     - `message`: `Error! Invalid body` or `Error!`
 
+### Card
+
+Метод "оплаты" карточкой. Генерирует ошибку платежной системы с вероятностью 20%.
+
+- Method: POST
+- URL: /money/card
+
+- req body: 
+    - `card: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! Card system error` or `Error!`
+
 ## Сценарий Админа
 
 Админ обладает полным доступом к данным всех клиентов. Он может:

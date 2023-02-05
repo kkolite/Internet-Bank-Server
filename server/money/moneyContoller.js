@@ -169,6 +169,26 @@ class moneyController {
             })
         }
     }
+
+    async card(req,res) {
+        try {
+            const {card} = req.body;
+            console.log(card);
+            const random = Math.random() * 10;
+            return res
+            .status(random > 2 ? 200 : 402)
+            .json({
+                success: random > 2,
+                message: random > 2 ? 'Success' : 'Error! Card system error'
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
 }
 
 export default new moneyController();
