@@ -9,6 +9,8 @@ import createAccount from './utils/bankAccounts/createAccount.js';
 import deleteAccount from './utils/bankAccounts/deleteAccount.js';
 import addMoney from './utils/bankAccounts/addMoney.js';
 import removeMoney from './utils/bankAccounts/removeMoney.js';
+import sendEmail from '../user/utils/sendEmail.js';
+import operations from '../data/operations.js';
 
 class moneyController {
     async change(req, res) {
@@ -181,6 +183,23 @@ class moneyController {
                 success: random > 2,
                 message: random > 2 ? 'Success' : 'Error! Card system error'
             })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async check(req, res) {
+        try {
+            const {email, operationID, money} = req.body;
+            const text = `Operation: ${operationID}(${operations[operationID].name}). Money: ${money}. Your RS Bank.`;
+            const send = await sendEmail(email, text);
+            return res
+            .status(send.success ? 200 : 400)
+            .json(send);    
         } catch (error) {
             console.log(error);
             res.status(400).json({

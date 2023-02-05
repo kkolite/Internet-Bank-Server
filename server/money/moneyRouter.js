@@ -10,5 +10,6 @@ router.post('/account', moneyController.newCurrencyAccount);
 router.put('/account', moneyController.changeAccountMoney);
 router.delete('/account', moneyController.deleteCurrencyAccount);
 router.post('/card', moneyController.card);
+router.post('/check', moneyController.check);
 
 export default router;

@@ -18,6 +18,8 @@
     - [Delete currency account](#delete-currency-account)
     - [Currency exchange](#currency-exchange)
     - [Commission](#commission)
+    - [Card](#card)
+    - [Send check to email](#send-check-to-email)
 - [Сценарий Админа](#сценарий-админа)
     - [Check](#check)
     - [Get bank info](#get-bank-info)
@@ -384,6 +386,26 @@
 - error bodies:
     - `success: false`
     - `message`: `Error! Card system error` or `Error!`
+
+### Send check to email
+
+Отправка чека операции по электронной почте.
+
+- Method: POST
+- URL: /money/check
+
+- req body: 
+    - `money: number`
+    - `operationID: number`
+    - `email: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message: Error!`
 
 ## Сценарий Админа
 
