@@ -3,7 +3,6 @@ import { verify } from 'jsonwebtoken';
 import { SECRET } from '../../config.js';
 
 export default async function(req, res, next) {
-    console.log(req.headers);
     const header = req.headers.authorization;
         if (!header) {
             return res

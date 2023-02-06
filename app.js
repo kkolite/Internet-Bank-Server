@@ -1,5 +1,3 @@
-// 9Ij62MhBMOLIoZQ5
-
 import express from 'express';
 const app = express();
 import cors from 'cors';
@@ -15,6 +13,7 @@ import adminCheck from './server/admin/utils/adminCheck.js';
 import actionRouter from './server/user/actionRouter.js';
 import userCheck from './server/user/utils/userCheck.js';
 import moneySecureRouter from './server/money/moneySecureRouter.js';
+import stockRouter from './server/stock/stockRouter.js';
 
 const { set, connect } = mng;
 const { json } = bp;
@@ -31,6 +30,7 @@ app.use('/money', moneyRouter);
 app.use('/admin', adminCheck, adminRouter);
 app.use('/quiz', quizRouter);
 app.use('/statistics', statRouter);
+app.use('/stocks', userCheck, stockRouter);
 
 async function start() {
 	try {

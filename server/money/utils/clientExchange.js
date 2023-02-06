@@ -34,7 +34,6 @@ export default async function(req) {
 
     const data = await exchangeRate(currencyOne, currencyTwo, money);
     const newMoney = data.new_amount;
-    console.log(newMoney);
 
     const add = await changeMoney(username, newMoney, currencyTwo, OPERATIONS_ACTION.ADD);
     if (!add.success) return add;

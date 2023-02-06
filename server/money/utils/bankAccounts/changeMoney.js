@@ -17,7 +17,6 @@ export default async function(username, money, currency, operation) {
     }
     if (operation === OPERATIONS_ACTION.REMOVE) {
         const isEnough = result.account.money >= money;
-        console.log(isEnough)
         if (!isEnough) {
             return {
                 success: false,

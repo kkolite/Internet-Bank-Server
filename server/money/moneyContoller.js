@@ -160,7 +160,6 @@ class moneyController {
     async card(req,res) {
         try {
             const {card} = req.body;
-            console.log(card);
             const random = Math.random() * 10;
             return res
             .status(random > 2 ? 200 : 402)

@@ -32,7 +32,9 @@
 - [Викторина](#викторина)
     - [Get quiz](#get-quiz)
     - [Check Answers](#check-answers)
-- [В разработке](#в-разработке)
+- [Stonks](#stonks)
+    - [Get stonks data](#get-stonks-data)
+    - [Buy or sell stonks](#buy-or-sell-stonks)
 
 ## Сценарий Пользователя 
 
@@ -644,6 +646,44 @@
     - `success: false`
     - `message`: `Error`
 
-## В разработке
+## Stonks
 
-- Чат-бот (Web Socket)
+### Get stonks Data
+
+Получение текущих данных по акциям (включая акции пользователя). Обновление цен на акции идет с помощью вебсокета.
+
+- Method: GET
+- URL: stonks/
+
+- req header: `Authorization: Bearer ${token}`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `stocks`
+    - `userStocks`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
+### Buy or sell stonks
+
+Покупка или продажа акций. Реализована по такому же принципу как изменение денег на счету - один путь, нужная операция передается в параметрах. В теле запроса передаются количество акций и их название.
+
+- Method: POST
+- URL: stonks/
+
+- req header: `Authorization: Bearer ${token}`
+- req query: `operation`: `add` or `remove`
+- req body: 
+    - `number: number`
+    - `stockName: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Invalid body or query` or `Not found stocks` or `Not enough stocks` or `Not enough money` or `Not found stocks in user` or `Error`
