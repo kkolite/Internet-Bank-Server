@@ -137,6 +137,7 @@ class userController {
                     isAdmin: user.isAdmin,
                     isBlock: user.isBlock,
                     lastFive: user.lastFive,
+                    accounts: user.accounts,
                     email: user.email
                 }
             });

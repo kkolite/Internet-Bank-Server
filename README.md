@@ -175,6 +175,7 @@
         - `isAdmin: boolean`,
         - `isBlock: boolean`,
         - `lastFive`
+        - `accounts`
 
 - error bodies:
     - `success: false`
