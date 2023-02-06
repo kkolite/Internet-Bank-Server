@@ -26,8 +26,8 @@ export default function(){
     });*/
 
     clients.add(ws);
-    ws.onclose(() => {
-      clients.delete(ws)
+    ws.on('close', () => {
+      clients.delete(ws);
     })
   });
 }
