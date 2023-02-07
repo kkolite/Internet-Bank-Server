@@ -1,7 +1,7 @@
 import ndm from 'nodemailer';
 const { createTransport } = ndm;
 
-export default async function(toEmail, text) {
+export default async function(toEmail, text, subject) {
     let transporter = createTransport({
         service: 'gmail',
         auth: {
@@ -14,9 +14,9 @@ export default async function(toEmail, text) {
     })
 
     await transporter.sendMail({
-        from: '"RSBank Verify" <rsbank.verify@gmail.com>',
+        from: '"RSBank" <rsbank.verify@gmail.com>',
         to: `${toEmail}`,
-        subject: 'Secury code',
+        subject: `${subject}`,
         text: `${text}`,
     })
     return {

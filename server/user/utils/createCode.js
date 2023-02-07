@@ -30,6 +30,6 @@ export default async function(username) {
     });
 
     const text = `You code - ${verifyCode}`;
-    const sendStatus = await sendEmail(user.email, text);
+    const sendStatus = await sendEmail(user.email, text, 'Verify Code');
     return sendStatus;
 }

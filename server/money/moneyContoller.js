@@ -180,7 +180,7 @@ class moneyController {
         try {
             const {email, operationID, money} = req.body;
             const text = `Operation: ${operationID}(${operations[operationID].name}). Money: ${money}. Your RS Bank.`;
-            const send = await sendEmail(email, text);
+            const send = await sendEmail(email, text, 'Check');
             return res
             .status(send.success ? 200 : 400)
             .json(send);    
