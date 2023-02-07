@@ -58,6 +58,15 @@ class userController {
                 });
             }
 
+            if (user.isBlock) {
+                return res
+                .status(403)
+                .json({
+                    message: 'User is blocked!',
+                    success: false,
+                });
+            }
+
             const result = await createCode(user.username)
             return res
             .status(result.success ? 200 : 400)
