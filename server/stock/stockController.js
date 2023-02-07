@@ -3,6 +3,7 @@ import User from '../models/user.js';
 import { COMMISSION, OPERATIONS_ACTION } from '../config.js';
 import buyStonks from './utils/buyStonks.js';
 import sellStonks from './utils/sellStonks.js';
+import { sendOnce } from '../webSocket.js';
 
 class StockController {
   async getStocks() {
@@ -14,7 +15,8 @@ class StockController {
     const stocks = await this.getStocks();
     stocks.forEach(async (el) => {
       const random = Math.random() * 10;
-      el.money += (random > 4.8 ? Math.random() / 30 : -Math.random() / 30);
+      el.money += (random > 4.9 ? Math.random() / 70 : -Math.random() / 70);
+      if (el.money < 1) el.money+=1;
       await el.save();
     })
     return stocks;
@@ -69,6 +71,7 @@ class StockController {
         })
       }
 
+      await sendOnce();
       return res
       .status(result.success ? 200 : 400)
       .json(result)

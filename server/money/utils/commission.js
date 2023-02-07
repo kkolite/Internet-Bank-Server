@@ -9,5 +9,4 @@ export default async function commission(money, percent) {
     await Bank.updateOne({name: bankKey}, {
         money: newMoney
     })
-    await update(7, money);
 }

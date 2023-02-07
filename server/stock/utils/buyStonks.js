@@ -1,7 +1,9 @@
 import Stock from '../../models/stock.js';
 import User from '../../models/user.js';
 import Bank from '../../models/bank.js';
-import { bankKey } from '../../config.js';
+import { bankKey, OPERATION_STOCK } from '../../config.js';
+import update from '../../statistics/update.js';
+import updateLastFive from '../../statistics/updateLastFive.js';
 
 export default async function(user, stockName, number) {
   const stock = await Stock.findOne({name: stockName});
@@ -54,6 +56,9 @@ export default async function(user, stockName, number) {
   await Stock.updateOne({name: stockName}, {
     number: newNumber
   })
+
+  await update(OPERATION_STOCK.BUY, price);
+  await updateLastFive(user.username, OPERATION_STOCK.BUY, price);
 
   return {
     success: true,

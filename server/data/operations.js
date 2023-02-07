@@ -39,6 +39,16 @@ export default {
         ruName: 'Перевод денег между клиентами',
         category: 'Bank'
     },
+    9: {
+        name: 'Buy stocks',
+        ruName: 'Покупка акций',
+        category: 'Stocks'
+    },
+    10: {
+        name: 'Sell stocks',
+        ruName: 'Продажа акций',
+        category: 'Stocks'
+    },
     14: {
         name: 'Mobile network',
         ruName: 'Мобильная связь',

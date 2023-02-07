@@ -8,6 +8,10 @@ export const OPERATION_IDS = {
   'ADD_MONEY': 3,
   'REMOVE_MONEY': 4
 }
+export const OPERATION_STOCK = {
+  'BUY': 9,
+  'SELL': 10
+}
 export const OPERATIONS_ACTION = {
   'ADD': 'add',
   'REMOVE': 'remove'
