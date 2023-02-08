@@ -176,6 +176,7 @@
         - `isBlock: boolean`,
         - `lastFive`
         - `accounts`
+        - `cards`
 
 - error bodies:
     - `success: false`

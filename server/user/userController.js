@@ -147,7 +147,8 @@ class userController {
                     isBlock: user.isBlock,
                     lastFive: user.lastFive,
                     accounts: user.accounts,
-                    email: user.email
+                    email: user.email,
+                    cards: user.cards
                 }
             });
         } catch (error) {
