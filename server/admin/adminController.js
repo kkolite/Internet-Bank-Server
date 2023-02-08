@@ -26,12 +26,6 @@ class adminController{
 
     async getBank(req,res) {
         try {
-            /*const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
             const bankname = req.query.bankname || bankKey;
             const bank = await Bank.findOne({name: bankname});
             return res
@@ -52,12 +46,6 @@ class adminController{
 
     async getDatabase(req,res) {
         try {
-            /*const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
             const database = await User.find();
             const safeDatabase = clearDatabase(database);
             return res
@@ -78,12 +66,6 @@ class adminController{
 
     async getUser(req,res) {
         try {
-            /*const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
             const {username} = req.query;
             if (!username) {
                 return res
@@ -127,13 +109,6 @@ class adminController{
 
     async createUser(req,res) {
         try {
-            /*const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
-
             const answer = await createNew(req);
             return res
             .status(answer.success ? 200 : 400)
@@ -149,13 +124,6 @@ class adminController{
 
     async deleteUser(req,res) {
         try {
-           /* const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
-
             const {username} = req.body;
             if (!username) {
                 return res
@@ -194,21 +162,7 @@ class adminController{
 
     async blockUser(req,res) {
         try {
-            /*const result = await adminCheck(req);
-            if (!result.success) {
-                return res
-                .status(400)
-                .json(result)
-            }*/
-
             const { username, isBlock } = req.body;
-            if (!isBlock) {
-                return res.status(400).json({
-                    message: 'Error! Incorrect req body',
-                    success: false,
-                })
-            }
-
             const user = await User.findOne({username});
             if(!user) {
                 return res
