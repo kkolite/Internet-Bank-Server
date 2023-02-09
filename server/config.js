@@ -3,7 +3,7 @@ export const bankKey = 'Bank1';
 export const COMMISSION = 2;
 export const CURRENCY_COMMISSION = 3;
 export const USD = 'USD';
-export const OPERATION_HISTORY_LIMIT = 5;
+export const OPERATION_HISTORY_LIMIT = 10;
 export const OPERATION_IDS = {
   'ADD_MONEY': 3,
   'REMOVE_MONEY': 4

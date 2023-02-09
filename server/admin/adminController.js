@@ -1,7 +1,6 @@
 import User from '../models/user.js';
 import Bank from '../models/bank.js';
 import { bankKey } from '../config.js';
-import adminCheck from './utils/adminCheck.js';
 import createNew from '../user/utils/createUser.js';
 import clearDatabase from './utils/clearDatabase.js';
 

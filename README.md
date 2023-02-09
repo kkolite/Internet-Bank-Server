@@ -32,9 +32,9 @@
 - [Викторина](#викторина)
     - [Get quiz](#get-quiz)
     - [Check Answers](#check-answers)
-- [Stonks](#stonks)
-    - [Get stonks data](#get-stonks-data)
-    - [Buy or sell stonks](#buy-or-sell-stonks)
+- [Stocks](#stocks)
+    - [Get stocks data](#get-stocks-data)
+    - [Buy or sell stocks](#buy-or-sell-stocks)
 
 ## Сценарий Пользователя 
 
@@ -648,9 +648,9 @@
     - `success: false`
     - `message`: `Error`
 
-## Stonks
+## Stocks
 
-### Get stonks Data
+### Get stocks Data
 
 Получение текущих данных по акциям (включая акции пользователя). Обновление цен на акции идет с помощью вебсокета.
 
@@ -669,7 +669,7 @@
     - `success: false`
     - `message`: `Error`
 
-### Buy or sell stonks
+### Buy or sell stocks
 
 Покупка или продажа акций. Реализована по такому же принципу как изменение денег на счету - один путь, нужная операция передается в параметрах. В теле запроса передаются количество акций и их название.
 
