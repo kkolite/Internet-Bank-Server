@@ -1,6 +1,8 @@
 import { WebSocketServer } from 'ws';
 import stockController from './stock/stockController.js';
+import express from 'express';
 
+const app = express();
 const set = new Set();
 const clients = new Set();
 
@@ -18,7 +20,9 @@ export default function(){
       el.send(JSON.stringify(stocks));
     });
   }, 7000)
-  const wss = new WebSocketServer({ port: 8000 });
+
+  const server = app.listen(8000, () => console.log(`Listening on 8000`));
+  const wss = new WebSocketServer({ server: server});
 
   wss.on('connection', async function connection(ws, req) {
     clients.add(ws);
