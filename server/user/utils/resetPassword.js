@@ -31,6 +31,6 @@ export default async function(req) {
     })
 
     const text = `Your new password - ${password}. Please, update you password after succesfull login and verification`;
-    const sendStatus = sendEmail(user.email, text);
+    const sendStatus = sendEmail(user.email, text, 'Password Reset');
     return sendStatus;
 }

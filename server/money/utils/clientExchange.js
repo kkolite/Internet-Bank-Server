@@ -3,7 +3,7 @@ import changeMoney from "./bankAccounts/changeMoney.js";
 import User from "../../models/user.js";
 import exchangeRate from "./bankAccounts/exchangeRate.js";
 import jwt from 'jsonwebtoken';
-import { secret } from '../../config.js';
+import { OPERATIONS_ACTION, SECRET, USD } from '../../config.js';
 
 const { verify } = jwt;
 
@@ -17,7 +17,7 @@ export default async function(req) {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const payload = verify(token, secret);
+    const payload = verify(token, SECRET);
     const user = await User.findOne({_id: payload.id});
     const username = user.username;
 
@@ -29,19 +29,18 @@ export default async function(req) {
         }
     }
 
-    const remove = await changeMoney(username, money, currencyOne, 'remove');
+    const remove = await changeMoney(username, money, currencyOne, OPERATIONS_ACTION.REMOVE);
     if (!remove.success) return remove;
 
     const data = await exchangeRate(currencyOne, currencyTwo, money);
     const newMoney = data.new_amount;
-    console.log(newMoney);
 
-    const add = await changeMoney(username, newMoney, currencyTwo, 'add');
+    const add = await changeMoney(username, newMoney, currencyTwo, OPERATIONS_ACTION.ADD);
     if (!add.success) return add;
 
     let bankCurrency = money;
-    if (currencyOne !== 'USD') {
-        const data = await exchangeRate(currencyOne, 'USD', money);
+    if (currencyOne !== USD) {
+        const data = await exchangeRate(currencyOne, USD, money);
         bankCurrency = data.new_amount;
     }
     const stat = await update(2, bankCurrency);

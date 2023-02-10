@@ -4,8 +4,7 @@ import create from './create.js';
 export default async function(operationID, money) {
     const statistics = await Statistics.findOne({operationID});
     if (!statistics) {
-        const result = await create(operationID, money);
-        return result;
+        return await create(operationID, money);
     }
 
     const newMoney = statistics.money + money;

@@ -1,5 +1,5 @@
 import commission from './utils/commission.js';
-import { commission as _commission } from '../config.js';
+import { COMMISSION, OPERATIONS_ACTION } from '../config.js';
 import update from '../statistics/update.js';
 import changeMoney from './utils/changeMoney.js';
 import transferMoney from './utils/transferMoney.js';
@@ -9,6 +9,8 @@ import createAccount from './utils/bankAccounts/createAccount.js';
 import deleteAccount from './utils/bankAccounts/deleteAccount.js';
 import addMoney from './utils/bankAccounts/addMoney.js';
 import removeMoney from './utils/bankAccounts/removeMoney.js';
+import sendEmail from '../user/utils/sendEmail.js';
+import operations from '../data/operations.js';
 
 class moneyController {
     async change(req, res) {
@@ -28,14 +30,6 @@ class moneyController {
 
     async transfer(req, res) {
         try {
-            const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
-
             const result = await transferMoney(req);
 
             return res
@@ -59,7 +53,7 @@ class moneyController {
                     success: false,
                 })
             }
-            await commission(money, _commission);
+            await commission(money, COMMISSION);
             const moneyPay = money * ((100 - 2)/100);
 
             await update(operationID, money);
@@ -70,7 +64,7 @@ class moneyController {
                 success: true,
                 message: 'Success',
                 moneyPay,
-                commission: _commission
+                commission: COMMISSION
             })
         } catch (error) {
             console.log(error);
@@ -135,13 +129,6 @@ class moneyController {
 
     async changeAccountMoney(req,res) {
         try {
-            const header = req.headers.authorization;
-            if (!header) {
-                return res.status(403).json({
-                    message: 'Error! No token. Need to login',
-                    success: false,
-                })
-            }
             const {operation} = req.query;
             if (!operation) {
                 return res
@@ -152,15 +139,51 @@ class moneyController {
                 })
             }
             let result;
-            if (operation === 'add') {
+            if (operation === OPERATIONS_ACTION.ADD) {
                 result = await addMoney(req);
             }
-            if (operation === 'remove') {
+            if (operation === OPERATIONS_ACTION.REMOVE) {
                 result = await removeMoney(req);
             }
             return res
             .status(result.success ? 201 : 400)
             .json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async card(req,res) {
+        try {
+            const {card} = req.body;
+            const random = Math.random() * 10;
+            return res
+            .status(random > 2 ? 200 : 402)
+            .json({
+                success: random > 2,
+                message: random > 2 ? 'Success' : 'Error! Card system error'
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async check(req, res) {
+        try {
+            const {email, operationID, money} = req.body;
+            const text = `Operation: ${operationID}(${operations[operationID].name}). Money: ${money}. Your RS Bank.`;
+            const send = await sendEmail(email, text, 'Check');
+            return res
+            .status(send.success ? 200 : 400)
+            .json(send);    
         } catch (error) {
             console.log(error);
             res.status(400).json({

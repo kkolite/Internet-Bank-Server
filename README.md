@@ -18,6 +18,8 @@
     - [Delete currency account](#delete-currency-account)
     - [Currency exchange](#currency-exchange)
     - [Commission](#commission)
+    - [Card](#card)
+    - [Send check to email](#send-check-to-email)
 - [Сценарий Админа](#сценарий-админа)
     - [Check](#check)
     - [Get bank info](#get-bank-info)
@@ -27,7 +29,12 @@
     - [Block user](#block-user)
     - [Delete user](#delete-user)
     - [Get operation's statistics](#get-operations-statistics)
-- [В разработке](#в-разработке)
+- [Викторина](#викторина)
+    - [Get quiz](#get-quiz)
+    - [Check Answers](#check-answers)
+- [Stocks](#stocks)
+    - [Get stocks data](#get-stocks-data)
+    - [Buy or sell stocks](#buy-or-sell-stocks)
 
 ## Сценарий Пользователя 
 
@@ -36,7 +43,7 @@
 Регистрация пользователя в нашей базе. Необходимо передать ник, почту и пароль. **Валидация должна быть на фронтенде**. Вовзращает состояние выполненной операции (успех или неудача), многоразовый пин-код (если успех) и сообщение (успех или причина ошибки).
 
 - Method: POST
-- URL: user/registration
+- URL: action/registration
 
 - req body:
     - `username: string`,
@@ -58,7 +65,7 @@
 Авторизация клиента. Передается ник и пароль.
 
 - Method: POST
-- URL: user/login
+- URL: action/login
 
 - req body:
     - `username: string`,
@@ -77,7 +84,7 @@
 Проверка кода, который пришел на почту (или многоразового пин-кода). В ответ может вернуться ошибка с сообщением о причине ошибки. Успешное выполнение помимо статуса выполнения операции возвращает токен и информацию о пользователе (ник, количество денег, является ли пользователь админом, находится ли пользователь в блокировке).
 
 - Method: POST
-- URL: user/verify
+- URL: action/verify
 
 - req body:
     - `username: string`,
@@ -106,7 +113,7 @@
 Сброс пароля (если пользователь забыл его). Необходимо передать ник и почту (для проверки, что Вася это Вася). Отправляет на почту новый пароль.
 
 - Method: POST
-- URL: user/reset
+- URL: action/reset
 
 - req body:
     - `username: string`,
@@ -125,7 +132,7 @@
 Поиск клиента в нашей базе по его нику. Возвращает `true` или `false` без никакой другой информации о пользователе.
 
 - Method: GET
-- URL: user/check
+- URL: action/check
 
 - req query: `username`
 
@@ -136,7 +143,7 @@
 Получение операций.
 
 - Method: GET
-- URL: user/services
+- URL: action/services
 
 - res body: 
     - `message: Success!`,
@@ -164,9 +171,12 @@
     - `userConfig`:
         - `username: string`,
         - `money: number`,
+        - `email: string`,
         - `isAdmin: boolean`,
         - `isBlock: boolean`,
         - `lastFive`
+        - `accounts`
+        - `cards`
 
 - error bodies:
     - `success: false`
@@ -174,13 +184,14 @@
 
 #### PUT
 
-Обновление данных пользователя. Принимает ник, почту и пароль (опционально).
+Обновление данных пользователя. Принимает ник, почту и пароль (опционально). Необходимо подтверждение текущим паролем.
 
 - Method: PUT
 - URL: /user
 
 - req header: `Authorization: Bearer ${token}`
 - req body:
+    - `currentPassword: string`
     - ?`username: string`
     - ?`password: string`
     - ?`email: string`
@@ -191,7 +202,7 @@
 
 - error bodies:
     - `success: false`
-    - `message`: `Error! No token. Need to login` or `Error!`
+    - `message`: `Error! No token or/and password. Need to login` or `Invalid password` or `Error!`
 
 #### DELETE
 
@@ -211,6 +222,24 @@
     - `success: false`
     - `message`: `Error! No token or/and password. Need to login` or `Error!`
 
+### Save card
+
+Сохранение ССЫЛКИ на созданную пользователем карточку в БД
+
+- Method: POST
+- URL: /user/card
+
+- req header: `Authorization: Bearer ${token}`
+- req body: `link: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error!`
+
 ## Сценарий Денег
 
 ### Add or remove money
@@ -222,7 +251,7 @@
 Планируется добавить дополнительную верификацию (клиенту на почту придет пинкод).
 
 - Method: POST
-- URL: /money
+- URL: /securemoney
 
 - req header: `Authorization: Bearer ${token}`
 - req query: `operation`: `add` or `remove`
@@ -243,7 +272,7 @@
 Перевод денег между клиентами. Отправитель должен быть авторизирован, получатель определяется по нику.
 
 - Method: POST
-- URL: /money/transfer
+- URL: /securemoney/transfer
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -263,7 +292,7 @@
 Создает новый валютный счет. Если такая валюта уже есть у пользователя - возвращается ошибка.
 
 - Method: POST
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -283,7 +312,7 @@
 Удаляет валютный счет.
 
 - Method: DELETE
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req body: 
@@ -303,7 +332,7 @@
 Пополнение или снятие с валютного счета.
 
 - Method: PUT
-- URL: /money/account
+- URL: /securemoney/account
 
 - req header: `Authorization: Bearer ${token}`
 - req query: `operation` = `add` or `remove`
@@ -362,6 +391,44 @@
 - error bodies:
     - `success: false`
     - `message`: `Error! Invalid body` or `Error!`
+
+### Card
+
+Метод "оплаты" карточкой. Генерирует ошибку платежной системы с вероятностью 20%.
+
+- Method: POST
+- URL: /money/card
+
+- req body: 
+    - `card: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error! Card system error` or `Error!`
+
+### Send check to email
+
+Отправка чека операции по электронной почте.
+
+- Method: POST
+- URL: /money/check
+
+- req body: 
+    - `money: number`
+    - `operationID: number`
+    - `email: string`
+
+- res body:
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message: Error!`
 
 ## Сценарий Админа
 
@@ -523,9 +590,7 @@
 **Update**. Отключил проверку на админа, планируем выводить эту статистику в общий доступ.
 
 - Method: GET
-- URL: admin/statistics
-
-- req query?: `operationID: number`
+- URL: statistics/
 
 - res body: 
     - `success: true`
@@ -539,7 +604,88 @@
     - `success: false`
     - `message`: `Error! No token. Need to login` or `Error! No admin!` or `Not found operation` or `Error! Empty/broken statistics` or `Error`
 
-## В разработке
+## Викторина
 
-- Кредиты (money)
-- Депозиты (money)
+### Get quiz
+
+Получение вопросов викторины. Из данных на сервере рандомно выбирается пять вопросов, клиенту отправляется их айдишка, сами вопрос и варианты ответов на двух языках. Никаких ответов на клиенте.
+
+- Method: GET
+- URL: quiz/
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `questions[]`
+        - `id: number`
+        - `ruQuestion: string`
+        - `enQuestion: string`
+        - `ruAnswers: string[]`
+        - `enAnswers: string[]`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
+### Check answers
+
+Проверка ответов. Возвращает количество правильных ответов.
+
+- Method: POST
+- URL: quiz/
+
+- req body:
+    - `answers[]`
+        - `id: number`
+        - `answer: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `result: number`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
+## Stocks
+
+### Get stocks Data
+
+Получение текущих данных по акциям (включая акции пользователя). Обновление цен на акции идет с помощью вебсокета.
+
+- Method: GET
+- URL: stonks/
+
+- req header: `Authorization: Bearer ${token}`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+    - `stocks`
+    - `userStocks`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error`
+
+### Buy or sell stocks
+
+Покупка или продажа акций. Реализована по такому же принципу как изменение денег на счету - один путь, нужная операция передается в параметрах. В теле запроса передаются количество акций и их название.
+
+- Method: POST
+- URL: stonks/
+
+- req header: `Authorization: Bearer ${token}`
+- req query: `operation`: `add` or `remove`
+- req body: 
+    - `number: number`
+    - `stockName: string`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Invalid body or query` or `Not found stocks` or `Not enough stocks` or `Not enough money` or `Not found stocks in user` or `Error`

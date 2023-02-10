@@ -1,39 +1,28 @@
 import User from '../../models/user.js';
-import jwb from 'jsonwebtoken';
-import { secret } from '../../config.js';
+import { OPERATIONS_ACTION } from '../../config.js';
 import update from '../../statistics/update.js';
 import updateLastFive from '../../statistics/updateLastFive.js';
 
-const { verify } = jwb;
 
 export default async function(req) {
     const {money, operationID} = req.body;
     const {operation} = req.query;
-    const header = req.headers.authorization;
-        if (!header) {
-            return res.status(403).json({
-                message: 'Error! No token. Need to login',
-                success: false,
-            })
-        }
 
-    if(operation !== 'add' && operation !== 'remove' || !money) {
+    if(operation !== OPERATIONS_ACTION.ADD && operation !== OPERATIONS_ACTION.REMOVE || !money) {
         return {
             message: 'Error! Incorrect query string or money',
             success: false,
         }
     }
 
-    const token = header.split(' ')[1];
-    const payload = verify(token, secret);
-    const user = await User.findOne({_id: payload.id});
+    const user = await User.findOne({username: req.user.username});
 
     let newMoney = 0;
 
-    if(operation === 'add') {
+    if(operation === OPERATIONS_ACTION.ADD) {
         newMoney = user.money + money;
     }
-    if(operation === 'remove') {
+    if(operation === OPERATIONS_ACTION.REMOVE) {
         if(money > user.money) {
             return {
                 message: 'No enough money!',
@@ -44,7 +33,7 @@ export default async function(req) {
         newMoney = user.money - money;
     }
 
-    await User.updateOne({_id: payload.id}, {
+    await User.updateOne({username: req.user.username}, {
         money: newMoney
     });
 
