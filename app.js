@@ -36,10 +36,10 @@ async function start() {
 	try {
 		set('strictQuery', true);
 		await connect(MONGO_URL);
-		app.listen(port, function () {
+		const server = app.listen(port, function () {
 			console.log(`Server listens ${port}`);
 		});
-		webSocket();
+		webSocket(server);
 	} catch (error) {
 		console.log(error);
 	}
