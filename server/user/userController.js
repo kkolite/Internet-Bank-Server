@@ -174,7 +174,7 @@ class userController {
 
             const isPasswordValid = compareSync(password, user.password)
             if(isPasswordValid) {
-                await User.deleteOne({user: user.username});
+                await User.deleteOne({username: user.username});
             }
 
             return res
