@@ -1,6 +1,6 @@
 import Stock from '../models/stock.js';
 import User from '../models/user.js';
-import { COMMISSION, OPERATIONS_ACTION } from '../config.js';
+import { OPERATIONS_ACTION } from '../config.js';
 import buyStonks from './utils/buyStonks.js';
 import sellStonks from './utils/sellStonks.js';
 import { sendOnce } from '../webSocket.js';
