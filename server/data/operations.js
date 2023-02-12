@@ -2,32 +2,38 @@ export default {
     1: {
         name: 'Currency exchange (anonim)',
         ruName: 'Обмен валюты (анонимно)',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/3310/3310738.png'
     },
     2: {
         name: 'Currency exchange (client)',
         ruName: 'Обмен валюты (клиент)',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/3310/3310738.png'
     },
     3: {
         name: 'Refill currency account',
         ruName: 'Пополнение валютного счета',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
     },
     4: {
         name: 'Money remove from currency account',
         ruName: 'Снятие денег с валютного счета',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
     },
     5: {
         name: 'Refill',
         ruName: 'Пополнение основного счета',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
     },
     6: {
-        name: 'Money remove',
+        name: 'Transfer to card',
         ruName: 'Снятие денег со счета',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
     },
     7: {
         name: 'Commission',
@@ -37,7 +43,8 @@ export default {
     8: {
         name: 'Transfer between clients',
         ruName: 'Перевод денег между клиентами',
-        category: 'Bank'
+        category: 'Bank',
+        logo: 'https://cdn-icons-png.flaticon.com/512/876/876784.png'
     },
     9: {
         name: 'Buy stocks',
