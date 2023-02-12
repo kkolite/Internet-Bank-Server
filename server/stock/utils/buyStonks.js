@@ -37,7 +37,8 @@ export default async function(user, stockName, number) {
 
   const newStocks = [...user.stocks, {
     name: stockName,
-    number: number + prevNumber
+    number: number + prevNumber,
+    price: stock.money
   }];
 
   const bank = await Bank.findOne({name: bankKey});

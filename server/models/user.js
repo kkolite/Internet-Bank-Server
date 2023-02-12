@@ -13,7 +13,7 @@ const User = new Schema({
     lastFive: [{operationID: Number, date: Date, money: Number}],
     accounts: [{currency: String, money: Number}],
     cards: [String],
-    stocks: [{name: String, number: Number}]
+    stocks: [{name: String, number: Number, price: Number}]
 })
 
 export default model('User', User);

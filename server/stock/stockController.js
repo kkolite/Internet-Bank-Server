@@ -15,7 +15,7 @@ class StockController {
     const stocks = await this.getStocks();
     stocks.forEach(async (el) => {
       const random = Math.random() * 10;
-      el.money += (random > 4.9 ? Math.random() / 70 : -Math.random() / 70);
+      el.money += (random > 5 ? Math.random() / 80 : -Math.random() / 80);
       if (el.money < 1) el.money+=1;
       await el.save();
     })
