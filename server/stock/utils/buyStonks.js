@@ -29,16 +29,18 @@ export default async function(user, stockName, number) {
   }
 
   let prevNumber = 0;
+  let prevPrice = 0;
   const index = user.stocks.findIndex((el) => el.name === stockName);
   if (index !== -1) {
     prevNumber = user.stocks[index].number;
+    prevPrice = user.stocks[index].price;
     user.stocks.splice(index, 1);
   }
 
   const newStocks = [...user.stocks, {
     name: stockName,
     number: number + prevNumber,
-    price: stock.money
+    price: ((stock.money * number) + (prevPrice * prevNumber)) / (number + prevNumber)
   }];
 
   const bank = await Bank.findOne({name: bankKey});
