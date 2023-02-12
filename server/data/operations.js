@@ -33,7 +33,7 @@ export default {
         name: 'Transfer to card',
         ruName: 'Снятие денег со счета',
         category: 'Bank',
-        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/876784.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/69881.png'
     },
     7: {
         name: 'Commission',
@@ -44,7 +44,7 @@ export default {
         name: 'Transfer between clients',
         ruName: 'Перевод денег между клиентами',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/876/876784.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/876784.png'
     },
     9: {
         name: 'Buy stocks',
