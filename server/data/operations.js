@@ -3,37 +3,37 @@ export default {
         name: 'Currency exchange (anonim)',
         ruName: 'Обмен валюты (анонимно)',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/3310/3310738.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/3310738.png'
     },
     2: {
         name: 'Currency exchange (client)',
         ruName: 'Обмен валюты (клиент)',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/3310/3310738.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/3310738.png'
     },
     3: {
         name: 'Refill currency account',
         ruName: 'Пополнение валютного счета',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/69881.png'
     },
     4: {
         name: 'Money remove from currency account',
         ruName: 'Снятие денег с валютного счета',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/69881.png'
     },
     5: {
         name: 'Refill',
         ruName: 'Пополнение основного счета',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/69881.png'
     },
     6: {
         name: 'Transfer to card',
         ruName: 'Снятие денег со счета',
         category: 'Bank',
-        logo: 'https://cdn-icons-png.flaticon.com/512/69/69881.png'
+        logo: 'https://raw.githubusercontent.com/kkolite/travel-img/main/icon/876784.png'
     },
     7: {
         name: 'Commission',
