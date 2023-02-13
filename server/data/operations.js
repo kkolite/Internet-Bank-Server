@@ -200,7 +200,7 @@ export default {
         name: 'Booking.com',
         ruName: 'Booking.com',
         category: {
-            ru: 'Подписки',
+            ru: 'Путешествия',
             en: 'Travel'
         },
         logo: 'https://ar.apkshki.com/storage/5278/icon_5f38c3d77b8c1_5278_w256.png'
