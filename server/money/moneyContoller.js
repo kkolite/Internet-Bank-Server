@@ -78,13 +78,18 @@ class moneyController {
     async currencyExchange(req,res) {
         try {
             const {client} = req.query;
+            const header = req.headers.authorization;
+
+            let exchange;
             if (!client) {
-                const exchange = await anonimExchange(req);
-                return res
-                .status(exchange.success ? 200 : 400)
-                .json(exchange);
+                exchange = await anonimExchange(req, false);
             }
-            const exchange = await clientExchange(req);
+            else if (client && !header) {
+                exchange = await anonimExchange(req, true);
+            } else {
+                exchange = await clientExchange(req);
+            }
+            
             return res
             .status(exchange.success ? 200 : 400)
             .json(exchange);

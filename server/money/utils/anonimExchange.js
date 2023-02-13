@@ -3,7 +3,7 @@ import update from "../../statistics/update.js";
 import exchangeRate from "./bankAccounts/exchangeRate.js";
 import commission from "./commission.js";
 
-export default async function(req) {
+export default async function(req, isClient) {
     const {currencyOne, money} = req.body;
     if (!currencyOne || !money) {
         return {
@@ -17,7 +17,11 @@ export default async function(req) {
         const data = await exchangeRate(currencyOne, USD, money);
         bankCurrency = data.new_amount;
     }
-    const bankCommission = await commission(bankCurrency, percent);
+
+    if (isClient) {
+        const bankCommission = await commission(bankCurrency, percent);
+    }
+
     const clearMoney = bankCurrency * ((100 - percent) / 100);
     const statistics = await update(1, clearMoney);
     return statistics;
