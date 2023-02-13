@@ -148,7 +148,7 @@
 - res body: 
     - `message: Success!`,
     - `success: true`,
-    - `operations`: `{operaionID:{name, ruName, category, ?logo}}`
+    - `operations`: `{operaionID:{name, ruName, category, ruCategory, ?logo}}`
 
 - error bodies:
     - `success: false`,
