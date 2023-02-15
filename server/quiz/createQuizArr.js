@@ -7,10 +7,9 @@ export function createQuizArr(arr) {
   if (!arr.find((el) => el.id === question.id)) {
     arr.push({
       id: question.id,
-      ruQuestion: question.ruQuestion,
-      enQuestion: question.enQuestion,
-      ruAnswers: question.ruAnswers,
-      enAnswers: question.enAnswers
+      question: question.question,
+      answers: question.answers,
+      desc: question.desc,
     });
   }
 

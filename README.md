@@ -618,10 +618,9 @@
     - `message: Success`
     - `questions[]`
         - `id: number`
-        - `ruQuestion: string`
-        - `enQuestion: string`
-        - `ruAnswers: string[]`
-        - `enAnswers: string[]`
+        - `question: {ru, en}`
+        - `answers: {ru, en}`
+        - `desc: {ru, en}`
 
 - error bodies:
     - `success: false`
@@ -629,7 +628,7 @@
 
 ### Check answers
 
-Проверка ответов. Возвращает количество правильных ответов.
+Проверка ответов. Необходимо передать массив объектов. Возвращает количество правильных ответов.
 
 - Method: POST
 - URL: quiz/
