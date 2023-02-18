@@ -7,6 +7,7 @@ import createCode from './utils/createCode.js';
 import confirmCode from './utils/confirmCode.js';
 import resetPassword from './utils/resetPassword.js';
 import operations from '../data/operations.js';
+import sendEmail from './utils/sendEmail.js';
 
 const { sign, verify: _verify } = jwt;
 const { compareSync, hashSync } = pkg;
@@ -283,6 +284,30 @@ class userController {
                 success: true,
                 message: 'Success',
             })
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({
+                message: 'Error!',
+                success: false,
+            })
+        }
+    }
+
+    async sendLastOperations(req, res) {
+        try {
+            const {user} = req;
+            const text = user.lastFive
+            .map((el) => {
+                return `
+                Operation ID: ${el.operationID}
+                Money: ${el.money}
+                Date: ${el.date}`
+            })
+            .join('\n\n');
+            const send = await sendEmail(user.email, text, 'Last operations');
+            return res
+            .status(send.success ? 200 : 400)
+            .json(send);
         } catch (error) {
             console.log(error);
             res.status(400).json({

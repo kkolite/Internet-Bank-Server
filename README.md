@@ -240,6 +240,24 @@
     - `success: false`
     - `message`: `Error!`
 
+### Last operations
+
+Отправка на почту клиенту списка последних совершенных операций
+
+- Method: GET
+- URL: /user/last
+
+- req header: `Authorization: Bearer ${token}`
+
+- res body: 
+    - `success: true`
+    - `message: Success`
+
+- error bodies:
+    - `success: false`
+    - `message`: `Error!`
+
+
 ## Сценарий Денег
 
 ### Add or remove money
