@@ -628,7 +628,7 @@
 
 ### Check answers
 
-Проверка ответов. Необходимо передать массив объектов. Возвращает количество правильных ответов.
+Проверка ответов. Необходимо передать массив объектов. Возвращает количество правильных ответов и массив с правильными ответами!
 
 - Method: POST
 - URL: quiz/
@@ -641,7 +641,7 @@
 - res body: 
     - `success: true`
     - `message: Success`
-    - `result: number`
+    - `result: {correct: number, answers: []}`
 
 - error bodies:
     - `success: false`
