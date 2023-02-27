@@ -1,5 +1,7 @@
 Данный сервер написан для работы курсового проекта [Интернет-Банк](https://github.com/kkolite/Internet-Bank)
 
+Ссылка на сервер - internet-bank-server-production.up.railway.app
+
 - [Сценарий Пользователя](#сценарий-пользователя)
   - [Registration](#registration)
   - [Login](#login)
